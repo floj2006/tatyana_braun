@@ -9,16 +9,17 @@ export function clean(value, max) {
     .slice(0, max);
 }
 
+/** event: фраза после «на», например «свадьбу». */
 export function buildMessage({ event, date, guests, place, name }) {
-  const lines = ['Здравствуйте, Татьяна! Хочу пригласить вас ведущей.', `Повод: ${clean(event, 40)}`];
+  const lines = [`Здравствуйте, Татьяна. Ищу ведущую на ${clean(event, 40)}.`];
   const d = clean(date, MAX.date);
   const g = clean(guests, MAX.guests);
   const p = clean(place, MAX.place);
   const n = clean(name, MAX.name);
   if (d) lines.push(`Дата: ${d}`);
-  if (g) lines.push(`Гостей: ${g}`);
   if (p) lines.push(`Город и площадка: ${p}`);
-  lines.push('Подскажите, пожалуйста, свободна ли дата и какая будет стоимость.');
+  if (g) lines.push(`Гостей примерно: ${g}`);
+  lines.push('Вы свободны в этот день? Сколько это будет стоить?');
   if (n) lines.push(`Меня зовут ${n}.`);
   return lines.join('\n');
 }

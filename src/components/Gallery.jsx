@@ -1,25 +1,32 @@
-import { SITE } from '../config/site.js';
-import Photo from './Photo.jsx';
+import { useEffect, useState } from 'react';
+import { imgUrl } from '../lib/useImage.js';
 
-const SHOTS = [1, 2, 3, 4, 5, 6];
+const FILES = [1, 2, 3, 4, 5, 6, 7, 8].map((n) => `gallery-${n}.jpg`);
 
+// Показываются только фото, которые реально лежат в public/img. Нет фото, нет блока.
 export default function Gallery() {
+  const [ok, setOk] = useState([]);
+  useEffect(() => {
+    let alive = true;
+    FILES.forEach((f) => {
+      const i = new Image();
+      i.onload = () => alive && setOk((s) => (s.includes(f) ? s : [...s, f].sort()));
+      i.src = imgUrl(f);
+    });
+    return () => {
+      alive = false;
+    };
+  }, []);
+  if (!ok.length) return null;
   return (
     <section className="section" id="gallery">
       <div className="container">
-        <p className="eyebrow">Фото</p>
-        <h2>Атмосфера праздников</h2>
-        <div className="gallery">
-          {SHOTS.map((n) => (
-            <Photo key={n} file={`gallery-${n}.jpg`} alt={`Фото с праздника ${n}`} hint={`Фото ${n}`} className="photo--tile" />
+        <h2>Фото</h2>
+        <div className="masonry">
+          {ok.map((f) => (
+            <img key={f} src={imgUrl(f)} alt="" loading="lazy" decoding="async" />
           ))}
         </div>
-        {SITE.vk && (
-          <p className="gallery__note">
-            Больше фото и видео — в сообществе{' '}
-            <a href={SITE.vk} target="_blank" rel="noopener noreferrer">vk.ru/brauntv</a>
-          </p>
-        )}
       </div>
     </section>
   );

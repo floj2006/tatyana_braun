@@ -12,13 +12,13 @@ export default function Contact({ eventId, onEventChange }) {
   const area = useRef(null);
 
   const set = (k) => (e) => setF((s) => ({ ...s, [k]: e.target.value }));
-  const eventTitle = EVENTS.find((e) => e.id === eventId)?.title ?? EVENTS[0].title;
+  const eventOn = (EVENTS.find((e) => e.id === eventId) ?? EVENTS[0]).on;
 
   // Данные формы никуда не отправляются: сообщение собирается в браузере,
   // копируется в буфер и посетитель сам отправляет его в мессенджер.
   async function onSubmit(e) {
     e.preventDefault();
-    const text = buildMessage({ event: eventTitle, ...f });
+    const text = buildMessage({ event: eventOn, ...f });
     setMessage(text);
     track('form_submit', { event: eventId });
     try {
@@ -38,12 +38,8 @@ export default function Contact({ eventId, onEventChange }) {
     <section className="section section--cta" id="contact">
       <div className="container contact">
         <div className="contact__text">
-          <p className="eyebrow eyebrow--light">Свободна ли ваша дата?</p>
-          <h2>Напишите мне — отвечу лично</h2>
-          <p>
-            Заполните мини-анкету: сообщение соберётся само, останется отправить его в мессенджер. Или просто напишите
-            своими словами.
-          </p>
+          <h2>Написать Татьяне</h2>
+          <p>Напишите дату, город и повод. Остальное обсудите в переписке. Можно сразу в VK или собрать сообщение справа.</p>
           <div className="contact__btns">
             {SITE.vk && (
               <a className="btn btn--silver" href={SITE.vk} target="_blank" rel="noopener noreferrer" onClick={() => track('click_vk', { place: 'contact' })}>
@@ -60,7 +56,7 @@ export default function Contact({ eventId, onEventChange }) {
 
         <form className="form" onSubmit={onSubmit} noValidate>
           <label>
-            Какой праздник?
+            Что отмечаете
             <select value={eventId} onChange={(e) => onEventChange(e.target.value)}>
               {EVENTS.map((e) => (
                 <option key={e.id} value={e.id}>{e.title}</option>
@@ -70,7 +66,7 @@ export default function Contact({ eventId, onEventChange }) {
           <div className="form__row">
             <label>
               Дата
-              <input value={f.date} onChange={set('date')} maxLength={LIMITS.date} placeholder="например, 14 августа" autoComplete="off" />
+              <input value={f.date} onChange={set('date')} maxLength={LIMITS.date} placeholder="14 августа" autoComplete="off" />
             </label>
             <label>
               Гостей
@@ -79,19 +75,19 @@ export default function Contact({ eventId, onEventChange }) {
           </div>
           <label>
             Город и площадка
-            <input value={f.place} onChange={set('place')} maxLength={LIMITS.place} placeholder="город, ресторан (если известно)" autoComplete="off" />
+            <input value={f.place} onChange={set('place')} maxLength={LIMITS.place} placeholder="город, ресторан" autoComplete="off" />
           </label>
           <label>
             Ваше имя
-            <input value={f.name} onChange={set('name')} maxLength={LIMITS.name} placeholder="как к вам обращаться" autoComplete="given-name" />
+            <input value={f.name} onChange={set('name')} maxLength={LIMITS.name} placeholder="имя" autoComplete="given-name" />
           </label>
-          <button className="btn btn--dark btn--block" type="submit">Собрать сообщение</button>
+          <button className="btn btn--dark btn--block" type="submit">Составить сообщение</button>
 
           {message ? (
             <div className="form__result" role="status">
               <textarea ref={area} readOnly value={message} rows={6} aria-label="Готовое сообщение" />
               <p className={copied ? 'ok' : ''}>
-                {copied ? 'Скопировано. Вставьте в чат и отправьте.' : 'Скопируйте текст выше и отправьте в чат.'}
+                {copied ? 'Скопировано. Вставьте в чат.' : 'Скопируйте текст и вставьте в чат.'}
               </p>
               <div className="form__send">
                 {SITE.vk && (
@@ -107,7 +103,7 @@ export default function Contact({ eventId, onEventChange }) {
               </div>
             </div>
           ) : (
-            <p className="form__hint">Данные не отправляются и не хранятся: сообщение остаётся только на вашем устройстве.</p>
+            <p className="form__hint">Форма ничего не отправляет. Текст остаётся у вас на устройстве.</p>
           )}
         </form>
       </div>

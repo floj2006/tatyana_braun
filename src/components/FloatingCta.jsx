@@ -24,7 +24,7 @@ export default function FloatingCta() {
   const hide = atContact || !scrolled;
   return (
     <a className={`fab${hide ? ' hide' : ''}`} href="#contact" tabIndex={hide ? -1 : 0} onClick={() => track('cta_click', { place: 'fab' })}>
-      Узнать про дату
+      Написать
     </a>
   );
 }

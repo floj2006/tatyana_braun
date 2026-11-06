@@ -4,8 +4,8 @@ import { safeUrl } from '../config/site.js';
 
 describe('buildMessage', () => {
   it('включает только заполненные поля', () => {
-    const m = buildMessage({ event: 'Свадьба', date: '14 августа', guests: '', place: '', name: 'Анна' });
-    expect(m).toContain('Повод: Свадьба');
+    const m = buildMessage({ event: 'свадьбу', date: '14 августа', guests: '', place: '', name: 'Анна' });
+    expect(m).toContain('Ищу ведущую на свадьбу.');
     expect(m).toContain('Дата: 14 августа');
     expect(m).not.toContain('Гостей');
     expect(m).toContain('Меня зовут Анна.');
@@ -15,7 +15,7 @@ describe('buildMessage', () => {
     expect(clean('x'.repeat(500), 20)).toHaveLength(20);
   });
   it('не даёт вставить переводы строк в поле', () => {
-    const m = buildMessage({ event: 'Юбилей', date: '1\nДата: подделка', guests: '', place: '', name: '' });
+    const m = buildMessage({ event: 'юбилей', date: '1\nДата: подделка', guests: '', place: '', name: '' });
     expect(m.split('\n').filter((l) => l.startsWith('Дата:'))).toHaveLength(1);
   });
 });
