@@ -22,7 +22,7 @@ const hasMedia = PHOTOS.length + VIDEOS.length > 0;
 
 // Пункты меню только для разделов, у которых есть данные.
 const HOME_NAV = [
-  ['#about', 'Обо мне', ABOUT.paragraphs.length],
+  ['#about', 'Обо мне', ABOUT.facts.length + ABOUT.story.length],
   ['#formats', 'Форматы', FORMATS.length],
   ['#approach', 'Подход', APPROACH.items.length],
   ['#process', 'Подготовка', PROCESS.steps.length],

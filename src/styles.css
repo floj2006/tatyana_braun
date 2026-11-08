@@ -112,11 +112,16 @@ ul,ol{margin:0;padding:0}
 .section__head .lead{margin:0}
 
 /* Обо мне */
-.about__in{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(32px,7vw,120px);align-items:start}
-.about__quote{position:relative;margin:28px 0 0;padding-left:28px;font-family:var(--serif);font-size:clamp(1.45rem,2.6vw,2.1rem);line-height:1.3;color:var(--graphite)}
-.about__quote::before{content:"";position:absolute;left:0;top:.3em;bottom:.3em;width:1px;background:linear-gradient(180deg,var(--silver),var(--graphite))}
-.about__text{padding-top:clamp(0px,6vw,96px);font-size:1.1rem}
-.about__text p:last-child{margin-bottom:0}
+.about__in{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(24px,7vw,120px);align-items:start}
+.about__in h2{margin:0}
+.about__facts{margin:0;display:grid}
+.about__facts div{display:grid;grid-template-columns:minmax(110px,.35fr) minmax(0,1fr);gap:8px 32px;padding:22px 0;border-top:1px solid var(--line)}
+.about__facts div:last-child{border-bottom:1px solid var(--line)}
+.about__facts dt{font-family:var(--serif);font-size:1.25rem;color:var(--graphite)}
+.about__facts dd{margin:0;font-size:1.08rem}
+.about__facts a{text-underline-offset:4px;text-decoration-thickness:1px}
+.about__facts a:hover{text-decoration-thickness:2px}
+.about__story{margin:28px 0 0;font-size:1.1rem}
 
 /* Форматы */
 .formats__list{list-style:none}
@@ -345,7 +350,7 @@ ul,ol{margin:0;padding:0}
   .hero__lead{order:4;margin:24px 0 0}
   .hero__pick{order:5;margin-top:28px}
   .section__head,.approach__head,.about__in,.faq__in,.contact__in{grid-template-columns:1fr}
-  .about__text{padding-top:0}
+  .about__facts div{grid-template-columns:1fr;gap:4px}
   .formats__row{grid-template-columns:40px minmax(0,1fr);gap:6px 12px;padding:24px 12px;margin:0 -12px}
   .formats__row p,.formats__pick{grid-column:2}
   .formats__pick{justify-self:start}
