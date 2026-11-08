@@ -93,7 +93,7 @@ export default function Contact({ format, onFormat, titleRef }) {
       <div className="wrap contact__in">
         <div className="contact__intro">
           <h2 id="contact-title" className="title" tabIndex={-1} ref={titleRef}>
-            <span className="title__initial">У</span>знать, свободна ли дата
+            Узнать, свободна ли дата
           </h2>
           <p>
             Я отвечаю в личных сообщениях VK. Отметьте повод, дату и город и нажмите кнопку. Текст сообщения

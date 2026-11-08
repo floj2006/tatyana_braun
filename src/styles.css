@@ -46,8 +46,6 @@ ul,ol{margin:0;padding:0}
 
 /* ===== Заголовки: рукописный инициал + тонкий капслок ===== */
 .title{font-family:var(--sans);font-weight:200;text-transform:uppercase;font-size:clamp(2.3rem,6.2vw,5.4rem);line-height:.98;letter-spacing:.01em;margin:0 0 .7em}
-.title__initial,.initial{font-family:var(--script);font-weight:400;text-transform:none;font-size:1.75em;line-height:0;letter-spacing:0;margin-right:-.06em;vertical-align:-.16em;color:var(--graphite)}
-.section--dark .title__initial,.contact .title__initial{color:var(--silver)}
 
 /* ===== Кнопки и ссылки ===== */
 .btn{position:relative;overflow:hidden;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;gap:.5em;min-height:52px;padding:.85em 2em;border:1px solid transparent;border-radius:999px;font:inherit;font-size:.95rem;font-weight:600;line-height:1.2;letter-spacing:.06em;text-transform:uppercase;text-align:center;text-decoration:none;cursor:pointer;transition:background-color .25s var(--ease),color .25s var(--ease),border-color .25s var(--ease),box-shadow .25s var(--ease),transform .2s var(--ease)}
@@ -90,10 +88,12 @@ ul,ol{margin:0;padding:0}
 .hero__in{position:relative;z-index:1;padding:clamp(48px,7vw,104px) 0}
 .hero__text{max-width:760px}
 .hero__title{font-family:var(--sans);font-weight:200;text-transform:uppercase;font-size:clamp(3rem,8vw,8rem);line-height:1.02;letter-spacing:.015em;color:var(--ink)}
-.hero__title .initial{font-size:1.45em;margin-right:-.1em;vertical-align:-.14em}
 .hero__line{display:block;white-space:nowrap}
 .hero__line--2{padding-left:clamp(48px,13vw,230px)}
-.hero__role{display:block;margin:30px 0 0 clamp(48px,13vw,230px);font-family:var(--serif);font-size:clamp(1.05rem,1.5vw,1.3rem);line-height:1.4;letter-spacing:.01em;text-transform:none;color:var(--graphite)}
+.hero__role{display:block;margin:26px 0 0 clamp(48px,13vw,230px);font-weight:400;letter-spacing:0;text-transform:none}
+/* рукописная подпись отдельной строкой: не касается имени и не перекрывает другой текст */
+.hero__script{display:block;font-family:var(--script);font-size:clamp(2rem,3vw,2.8rem);line-height:1.2;color:var(--graphite)}
+.hero__city{display:block;margin-top:2px;font-family:var(--serif);font-size:clamp(1rem,1.3vw,1.15rem);line-height:1.4;color:var(--muted)}
 .hero__eyebrow{margin:0 0 18px;font-family:var(--sans);font-weight:300;font-size:.95rem;letter-spacing:.16em;text-transform:uppercase;color:var(--graphite)}
 .hero__heading{font-family:var(--sans);font-weight:200;text-transform:uppercase;font-size:clamp(2.2rem,5vw,4.8rem);line-height:1;letter-spacing:.01em}
 .hero__lead{max-width:30em;margin:32px 0 32px;font-size:1.12rem;line-height:1.6;color:var(--muted)}
@@ -335,31 +335,26 @@ ul,ol{margin:0;padding:0}
   .pricing__foot{grid-template-columns:1fr}
   .media__photos{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
-/* Телефон: фото на весь экран, текст поверх на затемнении */
+/* Телефон: фото сверху, текст под ним на светлом фоне — ничего не лежит на лице */
 @media (max-width:899px){
-  .hero{align-items:flex-end;min-height:calc(100svh - var(--header))}
-  .hero__photo{width:100%}
-  .hero__photo img{object-position:50% 8%}
-  .hero__photo::after{background:linear-gradient(180deg,rgba(20,21,25,0) 34%,rgba(20,21,25,.62) 52%,rgba(20,21,25,.9) 70%,rgba(20,21,25,.95) 100%)}
-  .hero__in{padding:28px 0 36px}
-  .hero__text{display:flex;flex-direction:column;color:var(--on-dark)}
-  .hero__title,.hero__heading{color:var(--on-dark)}
-  .hero .initial{color:var(--on-dark)}
-  .hero__title{font-size:min(14vw,5rem)}
-  .hero__line--2{padding-left:16vw}
-  .hero__role{margin:18px 0 0 16vw;color:var(--on-dark-muted)}
-  .hero__eyebrow{color:var(--on-dark-muted)}
-  .hero__heading{font-size:min(9.4vw,3rem)}
+  .hero{flex-direction:column;align-items:stretch;min-height:0}
+  .hero__photo{position:relative;width:100%;height:clamp(240px,52svh,560px)}
+  .hero__photo img{object-position:50% 12%}
+  /* мягкий переход нижнего края фото в фон, без затемнения */
+  .hero__photo::after{background:linear-gradient(180deg,rgba(245,245,247,0) 82%,var(--bg) 100%)}
+  .hero__in{padding:14px 0 40px}
+  .hero__text{display:flex;flex-direction:column}
+  .hero__title{font-size:min(13vw,5rem)}
+  .hero__line--2{padding-left:14vw}
+  .hero__role{margin:14px 0 0 14vw}
+  .hero__script{font-size:1.9rem}
+  .hero__heading{font-size:min(9vw,3rem)}
   /* кнопка выше описания, чтобы попасть в первый экран */
-  .hero__actions{order:3;margin-top:24px}
-  /* на телефоне первый экран — фото, имя и кнопка; описание подробно раскрыто в разделах ниже */
+  .hero__actions{order:3;margin-top:22px}
+  /* на главной описание подробно раскрыто в разделах ниже, первый экран — фото, имя и кнопка */
   .hero:not(.hero--page) .hero__lead{display:none}
-  .hero__lead{order:4;margin:20px 0 0;color:var(--on-dark-muted)}
-  .hero__price{order:2;margin:14px 0 0;color:var(--on-dark)}
-  .hero .btn--primary{background:var(--on-dark);color:var(--ink)}
-  .hero .btn--primary:hover{background:var(--white)}
-  .hero .link{color:var(--on-dark)}
-  .hero :focus-visible{outline-color:var(--on-dark)}
+  .hero__lead{order:4;margin:20px 0 0}
+  .hero__price{order:2;margin:14px 0 0}
   .hero__scroll{display:none}
   .section__head,.approach__head,.about__in,.faq__in,.contact__in{grid-template-columns:1fr}
   .about__facts div{grid-template-columns:1fr;gap:4px}
@@ -370,9 +365,7 @@ ul,ol{margin:0;padding:0}
 }
 @media (max-width:640px){
   body{font-size:1rem}
-  /* на узком экране заголовки переносятся: даём инициалу место, чтобы хвост не перечёркивал вторую строку */
-  .title{line-height:1.18}
-  .title__initial{font-size:1.5em;vertical-align:-.08em}
+  .title{line-height:1.1}
   .hero__actions .btn{flex:1 1 100%}
   .hero__actions .link{padding:8px 0}
   .pricing__cards,.pricing__dl{grid-template-columns:1fr}
@@ -387,6 +380,11 @@ ul,ol{margin:0;padding:0}
   .mobile-cta::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:var(--metal-line)}
   .mobile-cta.is-shown{transform:none;visibility:visible;transition-delay:0s}
   body{padding-bottom:84px}
+}
+/* низкий экран телефона (например, 320×568): фото ниже, чтобы кнопка осталась в первом экране */
+@media (max-height:620px) and (max-width:899px){
+  .hero__photo{height:clamp(200px,40svh,320px)}
+  .hero__photo img{object-position:50% 20%}
 }
 @media (max-width:359px){
   .logo{font-size:.95rem;letter-spacing:.1em}

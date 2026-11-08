@@ -71,6 +71,11 @@ describe('разделы с данными рендерятся корректн
 describe('публичная страница', () => {
   const html = renderToString(<App />);
 
+  it('город на сайте только из SITE.city (старый ошибочный город не встречается)', () => {
+    expect(html).not.toMatch(/Октябр/);
+    for (const r of ROUTES) expect(renderToString(<App route={r} />)).not.toMatch(/Октябр/);
+  });
+
   it('не содержит заглушек и служебных пометок', () => {
     expect(html).not.toMatch(/TODO|Lorem|заглушк|placeholder|ЧЕРНОВИК|example\.com/i);
   });

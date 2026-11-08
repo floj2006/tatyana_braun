@@ -4,17 +4,8 @@ import { priceLabel } from '../lib/contact.js';
 // Должно совпадать с imagesizes у preload в index.html.
 const SIZES = '(min-width: 900px) 50vw, 100vw';
 
-// Слово с рукописной первой буквой.
-function Lettered({ word }) {
-  return (
-    <>
-      <span className="initial">{word.slice(0, 1)}</span>
-      {word.slice(1)}
-    </>
-  );
-}
-
-// Первый экран: фото на всю высоту, поверх — имя тонким капслоком с рукописными инициалами.
+// Первый экран: имя тонким капслоком, под ним рукописная подпись отдельной строкой (без наложений).
+// На телефоне фото сверху, текст под ним на светлом фоне.
 // page — страница формата: свой H1, имя становится подписью.
 export default function Hero({ hasVideo, page, price }) {
   const { photo } = HERO;
@@ -43,18 +34,18 @@ export default function Hero({ hasVideo, page, price }) {
             <>
               <p className="hero__eyebrow">{SITE.name}</p>
               <h1 id="hero-title" className="hero__heading">
-                <Lettered word={page.h1} />
+                {page.h1}
               </h1>
             </>
           ) : (
             <h1 id="hero-title" className="hero__title">
               {words.map((w, i) => (
                 <span className={`hero__line hero__line--${i + 1}`} key={w}>
-                  <Lettered word={w} />{' '}
+                  {w}{' '}
                 </span>
               ))}
               <span className="hero__role">
-                {SITE.role} {SITE.cityIn}
+                <span className="hero__script">{SITE.role}</span> <span className="hero__city">{SITE.cityIn}</span>
               </span>
             </h1>
           )}

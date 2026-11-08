@@ -42,10 +42,18 @@ function seo() {
         ...(SITE.city ? { areaServed: { '@type': 'City', name: SITE.city } } : {}),
       },
     })),
-    // Город подтверждён заказчиком; регион и адрес не указаны, пока не подтверждены.
+    // Город подтверждён заказчиком; улица и точный адрес не указываются.
     ...(SITE.city
       ? {
-          workLocation: { '@type': 'Place', address: { '@type': 'PostalAddress', addressLocality: SITE.city, addressCountry: 'RU' } },
+          workLocation: {
+            '@type': 'Place',
+            address: {
+              '@type': 'PostalAddress',
+              addressLocality: SITE.city,
+              ...(SITE.region ? { addressRegion: SITE.region } : {}),
+              addressCountry: 'RU',
+            },
+          },
           areaServed: { '@type': 'City', name: SITE.city },
         }
       : {}),
@@ -58,6 +66,8 @@ function seo() {
       handler: (html) =>
         html
           .replaceAll('__SITE_URL__', url)
+          .replaceAll('__CITY_IN__', SITE.cityIn)
+          .replaceAll('__CITY__', SITE.city)
           .replace('__JSON_LD__', JSON.stringify(jsonLd).replace(/</g, '\\u003c'))
           .replace(
             '<meta charset="utf-8">',

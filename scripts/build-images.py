@@ -14,6 +14,9 @@ PUB = ROOT / 'public'
 PRATA = ROOT / 'src/assets/fonts/prata-cyrillic.woff2'
 ONEST = ROOT / 'src/assets/fonts/onest-cyrillic.woff2'
 
+# Город для подписи OG-картинки: должен совпадать с SITE.cityIn в src/content/site.js.
+CITY_IN = 'в Челябинске'
+
 PAPER = (245, 245, 247)
 INK = (32, 33, 38)
 MUTED = (101, 105, 115)
@@ -52,7 +55,7 @@ def og(photo):
     d.text((70, 302), 'Браун', font=ImageFont.truetype(str(PRATA), 96), fill=INK)
     d.line((72, 452, 132, 452), fill=SILVER, width=2)
     d.text((152, 434), 'Ведущая мероприятий', font=ImageFont.truetype(str(ONEST), 32), fill=GRAPHITE)
-    d.text((152, 474), 'в Октябрьском', font=ImageFont.truetype(str(ONEST), 32), fill=MUTED)
+    d.text((152, 474), CITY_IN, font=ImageFont.truetype(str(ONEST), 32), fill=MUTED)
     canvas.save(IMG / 'og.jpg', 'JPEG', quality=86, optimize=True, progressive=True)
     print('og', canvas.size)
 
