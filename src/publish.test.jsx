@@ -5,7 +5,8 @@ import App from './App.jsx';
 import Reviews from './components/Reviews.jsx';
 import Terms from './components/Terms.jsx';
 import Media from './components/Media.jsx';
-import { PHOTOS, REVIEWS, SITE, TERMS, VIDEOS } from './content/site.js';
+import { FORMATS, PHOTOS, REVIEWS, SITE, TERMS, VIDEOS } from './content/site.js';
+import { ROUTES } from './routes.js';
 import { HEADER_CSP } from '../csp.js';
 import vercel from '../vercel.json';
 
@@ -101,5 +102,47 @@ describe('CSP', () => {
   it('заголовок в vercel.json совпадает с csp.js', () => {
     const all = vercel.headers.find((h) => h.source === '/(.*)').headers;
     expect(all.find((h) => h.key === 'Content-Security-Policy').value).toBe(HEADER_CSP);
+  });
+});
+
+describe('страницы форматов', () => {
+  const formatRoutes = ROUTES.filter((r) => r.format);
+
+  it('есть хотя бы одна страница формата', () => {
+    expect(formatRoutes.length).toBeGreaterThan(0);
+  });
+
+  for (const route of formatRoutes) {
+    const f = FORMATS.find((x) => x.id === route.format);
+    const html = renderToString(<App route={route} />);
+
+    it(`${route.path}: один H1 с городом, без быстрого выбора повода`, () => {
+      expect(html.match(/<h1/g)).toHaveLength(1);
+      const h1 = html.match(/<h1[\s\S]*?<\/h1>/)[0];
+      expect(h1).toContain(f.page.h1);
+      if (SITE.city) expect(h1).toContain(SITE.cityIn);
+      expect(html).not.toContain('hero__chips');
+    });
+
+    it(`${route.path}: формат уже выбран в форме`, () => {
+      expect(html).toMatch(new RegExp(`value="${f.id}"[^>]*checked|checked[^>]*value="${f.id}"`));
+    });
+
+    it(`${route.path}: якоря ведут на существующие разделы, нет заглушек`, () => {
+      const anchors = [...html.matchAll(/href="#([\w-]+)"/g)].map((m) => m[1]);
+      for (const a of new Set(anchors)) expect(html, `#${a}`).toContain(`id="${a}"`);
+      expect(html).not.toMatch(/TODO|Lorem|заглушк|ЧЕРНОВИК/i);
+    });
+  }
+});
+
+describe('выключенные функции ничего не показывают', () => {
+  const html = renderToString(<App />);
+  it('WhatsApp без номера и баннер Метрики без настроек', () => {
+    if (!SITE.whatsapp) expect(html).not.toContain('WhatsApp');
+    expect(html).not.toContain('class="consent"');
+  });
+  it('цена не выводится, пока не подтверждена', () => {
+    if (FORMATS.every((f) => !f.priceFrom)) expect(html).not.toContain('₽');
   });
 });

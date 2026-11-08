@@ -1,3 +1,6 @@
+import { formatPath } from '../routes.js';
+import { priceLabel } from '../lib/contact.js';
+
 export default function Formats({ items, selected, onChoose }) {
   if (!items?.length) return null;
   return (
@@ -14,7 +17,19 @@ export default function Formats({ items, selected, onChoose }) {
               <li key={f.id} className={`formats__row${active ? ' is-active' : ''}`}>
                 <span className="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
                 <h3>{f.title}</h3>
-                <p>{f.text}</p>
+                <div className="formats__body">
+                  <p>{f.text}</p>
+                  {(priceLabel(f.priceFrom) || formatPath(f)) && (
+                    <p className="formats__meta">
+                      {priceLabel(f.priceFrom) && <span className="formats__price">{priceLabel(f.priceFrom)}</span>}
+                      {formatPath(f) && (
+                        <a className="formats__more" href={formatPath(f)}>
+                          Подробнее<span className="sr-only"> о формате «{f.title}»</span>
+                        </a>
+                      )}
+                    </p>
+                  )}
+                </div>
                 {/* Кнопка растянута на всю строку (::after), поэтому кликабельна вся строка. */}
                 <button type="button" className="formats__pick" aria-pressed={active} onClick={() => onChoose(f.id)}>
                   {active ? 'Выбрано' : 'Выбрать'}

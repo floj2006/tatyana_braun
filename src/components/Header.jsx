@@ -16,12 +16,16 @@ export default function Header({ nav }) {
   return (
     <header className="header" onKeyDown={onKeyDown}>
       <div className="wrap header__in">
-        <a href="#top" className="logo">{SITE.name}</a>
+        <a href="/" className="logo">
+          {SITE.name}
+        </a>
         <nav className={`nav${open ? ' is-open' : ''}`} id="site-nav" aria-label="Разделы сайта">
           <ul>
-            {nav.map(([id, label]) => (
-              <li key={id}>
-                <a href={`#${id}`} onClick={() => setOpen(false)}>{label}</a>
+            {nav.map(([href, label]) => (
+              <li key={href}>
+                <a href={href} onClick={() => setOpen(false)}>
+                  {label}
+                </a>
               </li>
             ))}
           </ul>

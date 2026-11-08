@@ -1,10 +1,10 @@
-export default function Approach({ data }) {
+export default function Approach({ data, id = 'approach' }) {
   if (!data?.items?.length) return null;
   return (
-    <section className="section approach reveal" id="approach" aria-labelledby="approach-title">
+    <section className="section approach reveal" id={id} aria-labelledby={`${id}-title`}>
       <div className="wrap">
         <div className="approach__head">
-          <h2 id="approach-title">{data.title}</h2>
+          <h2 id={`${id}-title`}>{data.title}</h2>
           {data.intro && <p className="lead">{data.intro}</p>}
         </div>
         <div className="approach__items">

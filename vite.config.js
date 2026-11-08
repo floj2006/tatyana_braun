@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import preact from '@preact/preset-vite';
 import { FORMATS, SITE } from './src/content/site.js';
+import { ROUTES } from './src/routes.js';
 import { META_CSP } from './csp.js';
 
 // Адрес сайта для canonical, Open Graph, sitemap и JSON-LD.
@@ -71,7 +72,9 @@ function seo() {
       this.emitFile({
         type: 'asset',
         fileName: 'sitemap.xml',
-        source: `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>${url}/</loc><lastmod>${today}</lastmod></url>\n</urlset>\n`,
+        source: `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${ROUTES.map(
+          (r) => `  <url><loc>${url}${r.path}</loc><lastmod>${today}</lastmod></url>`,
+        ).join('\n')}\n</urlset>\n`,
       });
     },
   };

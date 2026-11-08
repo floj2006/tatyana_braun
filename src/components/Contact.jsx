@@ -1,8 +1,10 @@
 import { useId, useRef, useState, useSyncExternalStore } from 'react';
-import { FORMATS, SITE } from '../content/site.js';
+import { BUSY_DATES, FORMATS, SITE } from '../content/site.js';
 import { buildMessage, LIMITS } from '../lib/message.js';
 import { todayIso, validate } from '../lib/validate.js';
 import { copySync, copyText } from '../lib/clipboard.js';
+import { isBusy, whatsappUrl } from '../lib/contact.js';
+import { track } from '../lib/analytics.js';
 
 const EMPTY = { date: '', noDate: false, city: '', guests: '', comment: '' };
 const ORDER = ['format', 'date', 'city', 'guests', 'comment'];
@@ -43,15 +45,26 @@ export default function Contact({ format, onFormat, titleRef }) {
     if (errors[key]) setErrors(({ [key]: _removed, ...rest }) => rest);
   }
 
-  function onSubmit(e) {
-    e.preventDefault();
+  // Проверка перед любым способом отправки; при ошибке фокус на первом поле с ошибкой.
+  function checkFields() {
     const found = validate(values, { formats: FORMAT_IDS, today: todayIso() });
     setErrors(found);
     const first = ORDER.find((k) => found[k]);
-    if (first) {
-      fields.current[first]?.focus();
-      return;
-    }
+    if (first) fields.current[first]?.focus();
+    return !first;
+  }
+
+  // WhatsApp официально принимает готовый текст в ссылке: копировать ничего не нужно.
+  function sendWhatsApp() {
+    if (!checkFields()) return;
+    track('whatsapp_click', { format });
+    window.open(whatsappUrl(SITE.whatsapp, message), '_blank', 'noopener,noreferrer');
+  }
+
+  function onSubmit(e) {
+    e.preventDefault();
+    if (!checkFields()) return;
+    track('form_submit', { format });
     // Копируем синхронно, пока страница в фокусе, и только потом открываем VK.
     if (copySync(message)) {
       window.open(SITE.vk, '_blank', 'noopener,noreferrer');
@@ -145,6 +158,11 @@ export default function Contact({ format, onFormat, titleRef }) {
                     {errors.date}
                   </p>
                 )}
+                {!v.noDate && isBusy(v.date, BUSY_DATES) && (
+                  <p className="field__busy" role="status">
+                    Эта дата у меня уже занята. Можно выбрать другую.
+                  </p>
+                )}
               </div>
               <div className="field">
                 <label htmlFor={id('city')}>Город</label>
@@ -226,6 +244,11 @@ export default function Contact({ format, onFormat, titleRef }) {
               <button className="btn btn--primary btn--block" type="submit">
                 Скопировать текст и открыть VK
               </button>
+              {whatsappUrl(SITE.whatsapp) && (
+                <button className="btn btn--line btn--block" type="button" onClick={sendWhatsApp}>
+                  Отправить в WhatsApp<span className="sr-only"> (откроется в новой вкладке, текст уже будет в сообщении)</span>
+                </button>
+              )}
               <p className="form__note">Сайт ничего не отправляет и не сохраняет.</p>
             </div>
           </form>
