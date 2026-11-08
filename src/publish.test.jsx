@@ -83,7 +83,7 @@ describe('публичная страница', () => {
   });
 
   it('город в главном заголовке, когда он подтверждён', () => {
-    const h1 = html.match(/<h1[\s\S]*?<\/h1>/)[0];
+    const h1 = html.match(/<h1[\s\S]*?<\/h1>/)[0].replace(/<[^>]+>/g, '');
     if (SITE.city) expect(h1).toContain(SITE.cityIn);
   });
 
@@ -118,7 +118,7 @@ describe('страницы форматов', () => {
 
     it(`${route.path}: один H1 с городом, без быстрого выбора повода`, () => {
       expect(html.match(/<h1/g)).toHaveLength(1);
-      const h1 = html.match(/<h1[\s\S]*?<\/h1>/)[0];
+      const h1 = html.match(/<h1[\s\S]*?<\/h1>/)[0].replace(/<[^>]+>/g, '');
       expect(h1).toContain(f.page.h1);
       if (SITE.city) expect(h1).toContain(SITE.cityIn);
       expect(html).not.toContain('hero__chips');

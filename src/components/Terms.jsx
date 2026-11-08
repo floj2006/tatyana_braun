@@ -1,3 +1,5 @@
+import Title from './Title.jsx';
+
 function rowsOf(data) {
   return [
     ['Длительность', data.duration],
@@ -7,41 +9,50 @@ function rowsOf(data) {
   ].filter(([, v]) => v);
 }
 
-/** Есть ли что показать в блоке условий. */
+/** Есть ли что показать в разделе стоимости. */
 export function hasTerms(data) {
   return Boolean(data && (data.includes?.length || rowsOf(data).length));
 }
 
-// Условия показываются внутри раздела подготовки, отдельной секции нет.
+// «Стоимость»: что входит (карточки) и как считается цена. Тарифы появятся вместе с ценами.
 export default function Terms({ data }) {
   if (!hasTerms(data)) return null;
   const rows = rowsOf(data);
   return (
-    <aside className="terms" aria-labelledby="terms-title">
-      <h3 id="terms-title">Условия и стоимость</h3>
-      {data.includes?.length > 0 && (
-        <>
-          <p className="terms__sub">Что входит</p>
-          <ul className="terms__includes">
-            {data.includes.map((x) => (
-              <li key={x}>{x}</li>
-            ))}
-          </ul>
-        </>
-      )}
-      {rows.length > 0 && (
-        <dl className="terms__dl">
-          {rows.map(([k, v]) => (
-            <div key={k}>
-              <dt>{k}</dt>
-              <dd>{v}</dd>
-            </div>
-          ))}
-        </dl>
-      )}
-      <a className="btn btn--primary btn--block" href="#contact">
-        Узнать стоимость для своей даты
-      </a>
-    </aside>
+    <section className="section pricing reveal" id="pricing" aria-labelledby="pricing-title">
+      <div className="wrap">
+        <Title id="pricing-title" text="Стоимость" />
+        {data.includes?.length > 0 && (
+          <>
+            <p className="pricing__sub">Входит в любой праздник</p>
+            <ul className="pricing__cards">
+              {data.includes.map((x, i) => (
+                <li key={x}>
+                  <span className="num" aria-hidden="true">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <p>{x}</p>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+        <div className="pricing__foot">
+          {rows.length > 0 && (
+            <dl className="pricing__dl">
+              {rows.map(([k, v]) => (
+                <div key={k}>
+                  <dt>{k}</dt>
+                  <dd>{v}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+          <a className="btn btn--primary" href="#contact">
+            Узнать стоимость для своей даты
+          </a>
+        </div>
+      </div>
+    </section>
   );
 }

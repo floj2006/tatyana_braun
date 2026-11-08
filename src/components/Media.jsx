@@ -1,3 +1,4 @@
+import Title from './Title.jsx';
 import { useState } from 'react';
 import { safeUrl } from '../content/site.js';
 
@@ -47,7 +48,7 @@ export default function Media({ photos = [], videos = [] }) {
   return (
     <section className="section media reveal" id="media" aria-labelledby="media-title">
       <div className="wrap">
-        <h2 id="media-title">{videos.length && photos.length ? 'Фото и видео' : videos.length ? 'Видео' : 'Фото'} с праздников</h2>
+        <Title id="media-title" text={videos.length && photos.length ? 'Фото и видео' : videos.length ? 'Видео' : 'Фотографии'} />
         {videos.length > 0 && (
           <div className="media__videos">
             {videos.map((v) => (

@@ -1,3 +1,4 @@
+import Title from './Title.jsx';
 import { formatPath } from '../routes.js';
 import { priceLabel } from '../lib/contact.js';
 
@@ -7,7 +8,7 @@ export default function Formats({ items, selected, onChoose }) {
     <section className="section formats reveal" id="formats" aria-labelledby="formats-title">
       <div className="wrap">
         <div className="section__head">
-          <h2 id="formats-title">Форматы мероприятий</h2>
+          <Title id="formats-title" text="Форматы" />
           <p className="lead">Нажмите на подходящий, и он подставится в форму заявки.</p>
         </div>
         <ul className="formats__list">

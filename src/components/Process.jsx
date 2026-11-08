@@ -1,12 +1,12 @@
-import Terms from './Terms.jsx';
+import Title from './Title.jsx';
 
-export default function Process({ data, terms }) {
+export default function Process({ data }) {
   if (!data?.steps?.length) return null;
   return (
     <section className="section process reveal" id="process" aria-labelledby="process-title">
       <div className="wrap process__in">
         <div>
-          <h2 id="process-title">{data.title}</h2>
+          <Title id="process-title" text={data.title} />
           <ol className="process__list">
             {data.steps.map((s, i) => (
               <li key={s.title}>
@@ -19,7 +19,6 @@ export default function Process({ data, terms }) {
             ))}
           </ol>
         </div>
-        <Terms data={terms} />
       </div>
     </section>
   );

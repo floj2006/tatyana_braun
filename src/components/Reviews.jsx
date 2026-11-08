@@ -1,3 +1,4 @@
+import Title from './Title.jsx';
 import { safeUrl } from '../content/site.js';
 
 const SOURCE_HOSTS = ['vk.ru', 'vk.com', 'm.vk.ru', 'm.vk.com'];
@@ -8,8 +9,8 @@ export default function Reviews({ items }) {
   return (
     <section className="section reviews reveal" id="reviews" aria-labelledby="reviews-title">
       <div className="wrap">
-        <h2 id="reviews-title">Отзывы</h2>
-        <div className="reviews__list">
+        <Title id="reviews-title" text="Отзывы" />
+        <div className="reviews__list" tabIndex={0} role="region" aria-label="Отзывы, листаются по горизонтали">
           {items.map((r, i) => {
             const src = safeUrl(r.source || '', SOURCE_HOSTS);
             return (

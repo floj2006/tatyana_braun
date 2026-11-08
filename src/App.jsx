@@ -9,6 +9,7 @@ import About from './components/About.jsx';
 import Formats from './components/Formats.jsx';
 import Approach from './components/Approach.jsx';
 import Process from './components/Process.jsx';
+import Terms, { hasTerms } from './components/Terms.jsx';
 import Media from './components/Media.jsx';
 import Reviews from './components/Reviews.jsx';
 import Faq from './components/Faq.jsx';
@@ -26,6 +27,7 @@ const HOME_NAV = [
   ['#formats', 'Форматы', FORMATS.length],
   ['#approach', 'Подход', APPROACH.items.length],
   ['#process', 'Подготовка', PROCESS.steps.length],
+  ['#pricing', 'Стоимость', hasTerms(TERMS)],
   ['#media', 'Фото и видео', hasMedia],
   ['#reviews', 'Отзывы', REVIEWS.length],
   ['#faq', 'Вопросы', FAQ.length],
@@ -36,6 +38,7 @@ const HOME_NAV = [
 const PAGE_NAV = [
   ['#approach', 'Как я веду'],
   ['#process', 'Подготовка'],
+  ['#pricing', 'Стоимость'],
   ['#faq', 'Вопросы'],
   ['/#formats', 'Все форматы'],
 ];
@@ -68,7 +71,8 @@ export default function App({ route = ROUTES[0] }) {
           <>
             <Hero page={page} price={pageFormat.priceFrom} hasVideo={hasMedia} />
             <Approach data={{ title: page.howTitle, items: page.how }} />
-            <Process data={PROCESS} terms={TERMS} />
+            <Process data={PROCESS} />
+            <Terms data={TERMS} />
             <Media photos={PHOTOS} videos={VIDEOS} />
             <Reviews items={REVIEWS} />
             <Faq items={[...page.faq, ...FAQ]} />
@@ -76,11 +80,12 @@ export default function App({ route = ROUTES[0] }) {
           </>
         ) : (
           <>
-            <Hero onChoose={chooseFormat} hasVideo={hasMedia} />
+            <Hero hasVideo={hasMedia} />
             <About data={ABOUT} />
             <Formats items={FORMATS} selected={format} onChoose={chooseFormat} />
             <Approach data={APPROACH} />
-            <Process data={PROCESS} terms={TERMS} />
+            <Process data={PROCESS} />
+            <Terms data={TERMS} />
             <Media photos={PHOTOS} videos={VIDEOS} />
             <Reviews items={REVIEWS} />
             <Faq items={FAQ} />

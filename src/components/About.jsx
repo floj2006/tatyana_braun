@@ -1,3 +1,4 @@
+import Title from './Title.jsx';
 import { SITE } from '../content/site.js';
 
 // Справка «Обо мне». Абзацы story появятся, когда будут слова самой Татьяны.
@@ -6,7 +7,7 @@ export default function About({ data }) {
   return (
     <section className="section about reveal" id="about" aria-labelledby="about-title">
       <div className="wrap about__in">
-        <h2 id="about-title">{data.title}</h2>
+        <Title id="about-title" text={data.title} />
         <div>
           {data.facts?.length > 0 && (
             <dl className="about__facts">
