@@ -78,7 +78,8 @@ p{margin:0 0 1em}
 
 /* о себе */
 .about{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(24px,6vw,72px);align-items:start}
-.about:not(:has(.photo)){grid-template-columns:1fr;max-width:760px}
+.about:not(:has(.photo)){grid-template-columns:1fr}
+.about:not(:has(.photo)) .about__text{max-width:760px}
 .photo--about{aspect-ratio:4/5;background:var(--s-200)}
 .about__text p{font-size:1.1rem;color:var(--s-800)}
 
