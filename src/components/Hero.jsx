@@ -1,30 +1,44 @@
-import { SITE } from '../config/site.js';
-import { track } from '../lib/analytics.js';
-import { useImage } from '../lib/useImage.js';
-import Photo from './Photo.jsx';
+import { HERO, SITE } from '../content/site.js';
 
 export default function Hero() {
-  const hasPhoto = useImage('tatyana.webp');
+  const { photo } = HERO;
+  const srcSet = photo.widths.map((w) => `${photo.base}-${w}.webp ${w}w`).join(', ');
+  const geo = [SITE.city, SITE.area].filter(Boolean).join('. ');
   return (
-    <section className={`hero${hasPhoto ? ' hero--photo' : ''}`} id="top">
-      <div className="container hero__in">
+    <section className="hero" id="top" aria-labelledby="hero-title">
+      <div className="hero__in">
         <div className="hero__text">
           <p className="hero__role">{SITE.role}</p>
-          <h1>{SITE.name}</h1>
-          <p className="hero__line">
-            Ведёт свадьбы, юбилеи, корпоративы и детские праздники. Перед каждым праздником узнаёт, что для вас
-            важно, и пишет программу под него.
-          </p>
-          <div className="hero__btns">
-            {SITE.vk && (
-              <a className="btn btn--dark" href={SITE.vk} target="_blank" rel="noopener noreferrer" onClick={() => track('click_vk', { place: 'hero' })}>
-                Написать во VK
+          <h1 id="hero-title">{SITE.name}</h1>
+          {geo && <p className="hero__geo">{geo}</p>}
+          <p className="hero__lead">{HERO.lead}</p>
+          <div className="hero__actions">
+            <a className="btn btn--accent" href="#contact">Узнать, свободна ли дата</a>
+            {SITE.video ? (
+              <a className="btn btn--line" href={SITE.video} target="_blank" rel="noopener noreferrer">
+                Смотреть видео<span className="sr-only"> (откроется VK Видео)</span>
               </a>
+            ) : (
+              SITE.vk && (
+                <a className="btn btn--line" href={SITE.vk} target="_blank" rel="noopener noreferrer">
+                  Написать во VK<span className="sr-only"> (откроется в новой вкладке)</span>
+                </a>
+              )
             )}
-            <a className="btn btn--line" href="#contact" onClick={() => track('cta_click', { place: 'hero' })}>Узнать про дату</a>
           </div>
         </div>
-        <Photo file="tatyana.webp" alt="Татьяна Браун" className="photo--hero" />
+        <figure className="hero__photo">
+          <img
+            src={`${photo.base}-800.webp`}
+            srcSet={srcSet}
+            sizes="(min-width: 900px) 42vw, 100vw"
+            width={photo.width}
+            height={photo.height}
+            alt={photo.alt}
+            fetchPriority="high"
+            decoding="async"
+          />
+        </figure>
       </div>
     </section>
   );

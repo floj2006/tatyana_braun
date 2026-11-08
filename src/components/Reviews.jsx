@@ -1,18 +1,34 @@
-import { REVIEWS } from '../config/site.js';
+import { safeUrl } from '../content/site.js';
 
-// Только настоящие отзывы из REVIEWS. Пусто, блока нет.
-export default function Reviews() {
-  if (!REVIEWS.length) return null;
+// Только реальные отзывы с автором: { id, author, event, text, source }. Без них раздел не рендерится.
+export default function Reviews({ items }) {
+  if (!items?.length) return null;
   return (
-    <section className="section section--soft" id="reviews">
-      <div className="container list-wrap">
-        <h2>Отзывы</h2>
-        {REVIEWS.map((r) => (
-          <blockquote className="quote" key={r.name + r.event}>
-            <p>{r.text}</p>
-            <footer>{r.name}, {r.event}</footer>
-          </blockquote>
-        ))}
+    <section className="section reviews reveal" id="reviews" aria-labelledby="reviews-title">
+      <div className="wrap">
+        <h2 id="reviews-title">Отзывы</h2>
+        <div className="reviews__list">
+          {items.map((r, i) => {
+            const src = safeUrl(r.source || '', ['vk.ru', 'vk.com', 'm.vk.ru', 'm.vk.com']);
+            return (
+              <figure className="review" key={r.id ?? i}>
+                <blockquote>
+                  <p>{r.text}</p>
+                </blockquote>
+                <figcaption>
+                  {r.author}
+                  {r.event && `, ${r.event}`}
+                  {src && (
+                    <>
+                      {' · '}
+                      <a href={src} target="_blank" rel="noopener noreferrer">Источник</a>
+                    </>
+                  )}
+                </figcaption>
+              </figure>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
