@@ -1,12 +1,8 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import '@fontsource/cormorant-garamond/cyrillic-500.css';
-import '@fontsource/cormorant-garamond/cyrillic-600.css';
-import '@fontsource/cormorant-garamond/cyrillic-500-italic.css';
-import '@fontsource/cormorant-garamond/latin-500.css';
-import '@fontsource/cormorant-garamond/latin-600.css';
-import '@fontsource/cormorant-garamond/latin-500-italic.css';
-import '@fontsource-variable/manrope/wght.css';
+import '@fontsource/prata/cyrillic-400.css';
+import '@fontsource/prata/latin-400.css';
+import '@fontsource-variable/onest/wght.css';
 import './styles.css';
 import App from './App.jsx';
 import { initAnalytics } from './lib/analytics.js';

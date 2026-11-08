@@ -9,7 +9,7 @@ export default function About() {
       <div className="container about">
         <Photo file="about.jpg" alt="Татьяна Браун на празднике" className="photo--about" />
         <div className="about__text">
-          <h2>О себе</h2>
+          <h2>О Татьяне</h2>
           {ABOUT.paragraphs.map((p) => (
             <p key={p}>{p}</p>
           ))}

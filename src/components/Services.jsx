@@ -16,8 +16,9 @@ export default function Services({ onSelect }) {
                   track('event_select', { event: e.id });
                 }}
               >
-                <span>{e.title}</span>
-                <small>Написать</small>
+                <span className="rows__title">{e.title}</span>
+                <span className="rows__text">{e.text}</span>
+                <small>Обсудить</small>
               </a>
             </li>
           ))}
