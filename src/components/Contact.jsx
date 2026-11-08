@@ -83,21 +83,21 @@ export default function Contact({ format, onFormat, titleRef }) {
             Узнать, свободна ли дата
           </h2>
           <p>
-            Отметьте повод, дату и город. Текст сообщения соберётся сам и скопируется, а страница Татьяны во VK
-            откроется в новой вкладке. Останется написать ей и вставить текст.
+            Я отвечаю в личных сообщениях VK. Отметьте повод, дату и город: текст соберётся сам и скопируется, а моя
+            страница во VK откроется в новой вкладке. Останется написать мне и вставить текст.
           </p>
           {SITE.vk && (
             <p className="contact__direct">
               Удобнее своими словами?{' '}
               <a href={SITE.vk} target="_blank" rel="noopener noreferrer">
-                Написать во VK напрямую<span className="sr-only"> (откроется в новой вкладке)</span>
+                Написать мне во VK<span className="sr-only"> (откроется в новой вкладке)</span>
               </a>
             </p>
           )}
         </div>
 
         <div className="contact__panel">
-          <form className="form" onSubmit={onSubmit} noValidate aria-label="Сообщение Татьяне">
+          <form className="form" onSubmit={onSubmit} noValidate aria-label="Сообщение Татьяне Браун">
             <fieldset className="form__formats" {...(formatError ? { 'aria-describedby': id('format-err') } : {})}>
               <legend>Что празднуете</legend>
               <div className="chips">
@@ -223,7 +223,7 @@ export default function Contact({ format, onFormat, titleRef }) {
             )}
 
             <div className="form__submit">
-              <button className="btn btn--accent btn--block" type="submit">
+              <button className="btn btn--primary btn--block" type="submit">
                 Скопировать текст и открыть VK
               </button>
               <p className="form__note">Сайт ничего не отправляет и не сохраняет: текст остаётся у вас.</p>
@@ -237,7 +237,7 @@ export default function Contact({ format, onFormat, titleRef }) {
                   <p className="result__title">Скопировать автоматически не получилось</p>
                   <p>
                     Текст ниже уже выделен: нажмите Ctrl+C или ⌘+C, на телефоне — долгое нажатие и «Скопировать». Затем
-                    откройте VK и вставьте его в сообщение Татьяне.
+                    откройте VK и вставьте его в сообщение мне.
                   </p>
                   <label className="sr-only" htmlFor={id('manual')}>
                     Текст сообщения
@@ -247,7 +247,7 @@ export default function Contact({ format, onFormat, titleRef }) {
                     <button type="button" className="btn btn--line btn--sm" onClick={copyAgain}>
                       Попробовать скопировать ещё раз
                     </button>
-                    <a className="btn btn--accent btn--sm" href={SITE.vk} target="_blank" rel="noopener noreferrer">
+                    <a className="btn btn--primary btn--sm" href={SITE.vk} target="_blank" rel="noopener noreferrer">
                       Открыть VK<span className="sr-only"> (откроется в новой вкладке)</span>
                     </a>
                   </div>
@@ -256,11 +256,11 @@ export default function Contact({ format, onFormat, titleRef }) {
                 <>
                   <p className="result__title">Текст скопирован</p>
                   <p>
-                    Во VK откройте сообщения Татьяне и вставьте текст: Ctrl+V или ⌘+V, на телефоне — долгое нажатие и
+                    Во VK откройте диалог со мной и вставьте текст: Ctrl+V или ⌘+V, на телефоне — долгое нажатие и
                     «Вставить».
                   </p>
                   <div className="result__actions">
-                    <a className="btn btn--accent btn--sm" href={SITE.vk} target="_blank" rel="noopener noreferrer">
+                    <a className="btn btn--primary btn--sm" href={SITE.vk} target="_blank" rel="noopener noreferrer">
                       Открыть VK<span className="sr-only"> (в новой вкладке)</span>
                     </a>
                     <button type="button" className="btn btn--line btn--sm" onClick={copyAgain}>

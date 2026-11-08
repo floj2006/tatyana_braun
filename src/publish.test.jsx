@@ -2,23 +2,21 @@
 import { describe, expect, it } from 'vitest';
 import { renderToString } from 'react-dom/server';
 import App from './App.jsx';
-import Events from './components/Events.jsx';
 import Reviews from './components/Reviews.jsx';
 import Terms from './components/Terms.jsx';
-import Videos from './components/Videos.jsx';
-import { EVENTS, REVIEWS, SITE, TERMS, VIDEOS } from './content/site.js';
+import Media from './components/Media.jsx';
+import { PHOTOS, REVIEWS, SITE, TERMS, VIDEOS } from './content/site.js';
 import { HEADER_CSP } from '../csp.js';
 import vercel from '../vercel.json';
 
 describe('разделы без данных не рендерятся', () => {
-  it('мероприятия, отзывы и видео', () => {
-    expect(renderToString(<Videos items={[]} />)).toBe('');
-    expect(renderToString(<Events items={[]} />)).toBe('');
+  it('фото и видео, отзывы', () => {
+    expect(renderToString(<Media photos={[]} videos={[]} />)).toBe('');
     expect(renderToString(<Reviews items={[]} />)).toBe('');
   });
 
   it('условия без пунктов', () => {
-    expect(renderToString(<Terms data={{ title: 'x', includes: [], duration: '', equipment: '', booking: '', price: '' }} />)).toBe('');
+    expect(renderToString(<Terms data={{ includes: [], duration: '', equipment: '', booking: '', price: '' }} />)).toBe('');
   });
 
   it('пустые поля условий не выводятся', () => {
@@ -43,15 +41,15 @@ describe('разделы с данными рендерятся корректн
   });
 
   it('видео из VK открывается в новой вкладке, чужой хост не выводится', () => {
-    const vk = renderToString(<Videos items={[{ id: 'a', title: 'Свадьба', url: 'https://vkvideo.ru/video-1_2' }]} />);
+    const vk = renderToString(<Media videos={[{ id: 'a', title: 'Свадьба', url: 'https://vkvideo.ru/video-1_2' }]} />);
     expect(vk).toContain('href="https://vkvideo.ru/video-1_2"');
     expect(vk).toContain('noopener');
-    const evil = renderToString(<Videos items={[{ id: 'b', title: 'x', url: 'https://evil.example/v' }]} />);
+    const evil = renderToString(<Media videos={[{ id: 'b', title: 'x', url: 'https://evil.example/v' }]} />);
     expect(evil).not.toContain('evil.example');
   });
 
   it('своё видео не грузится до нажатия: только постер', () => {
-    const html = renderToString(<Videos items={[{ id: 'a', title: 'Юбилей', src: '/video/a.mp4', poster: { src: '/img/a.jpg', width: 1280, height: 720 } }]} />);
+    const html = renderToString(<Media videos={[{ id: 'a', title: 'Юбилей', src: '/video/a.mp4', poster: { src: '/img/a.jpg', width: 1280, height: 720 } }]} />);
     expect(html).not.toContain('<video');
     expect(html).toContain('loading="lazy"');
   });
@@ -61,12 +59,11 @@ describe('разделы с данными рендерятся корректн
     expect(html).toContain('alt="Спасибо за вечер"');
   });
 
-  it('мероприятие выводит фото с размерами и ленивой загрузкой', () => {
-    const html = renderToString(
-      <Events items={[{ id: 'a', title: 'Свадьба Ани и Вити', format: 'Свадьба', date: 'июль 2026', story: 'История', photos: [{ src: '/img/a.webp', width: 800, height: 600, alt: 'Танец' }] }]} />,
-    );
+  it('фото выводятся с размерами, подписью и ленивой загрузкой', () => {
+    const html = renderToString(<Media photos={[{ id: 'a', src: '/img/a.webp', width: 800, height: 600, alt: 'Первый танец', caption: 'Свадьба, июль 2026' }]} />);
     expect(html).toMatch(/width="800"/);
     expect(html).toMatch(/loading="lazy"/);
+    expect(html).toContain('Свадьба, июль 2026');
   });
 });
 
@@ -78,16 +75,15 @@ describe('публичная страница', () => {
   });
 
   it('не показывает пустые разделы и пункты меню к ним', () => {
-    if (!EVENTS.length) expect(html).not.toContain('id="events"');
+    if (!PHOTOS.length && !VIDEOS.length) expect(html).not.toContain('id="media"');
     if (!REVIEWS.length) expect(html).not.toContain('id="reviews"');
-    if (!EVENTS.length) expect(html).not.toContain('href="#events"');
+    if (!PHOTOS.length && !VIDEOS.length) expect(html).not.toContain('href="#media"');
     if (!REVIEWS.length) expect(html).not.toContain('href="#reviews"');
-    if (!VIDEOS.length) expect(html).not.toContain('id="video"');
-    if (!VIDEOS.length) expect(html).not.toContain('href="#video"');
   });
 
-  it('не выводит город, пока он не подтверждён', () => {
-    if (!SITE.city) expect(html).not.toContain('hero__geo');
+  it('город в главном заголовке, когда он подтверждён', () => {
+    const h1 = html.match(/<h1[\s\S]*?<\/h1>/)[0];
+    if (SITE.city) expect(h1).toContain(SITE.cityIn);
   });
 
   it('у каждого якоря меню есть раздел', () => {

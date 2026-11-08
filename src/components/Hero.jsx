@@ -1,31 +1,34 @@
 import { FORMATS, HERO, SITE } from '../content/site.js';
 
 // Должно совпадать с imagesizes у preload в index.html.
-const SIZES = '(min-width: 900px) 46vw, 100vw';
+const SIZES = '(min-width: 900px) 40vw, calc(100vw - 32px)';
 
 export default function Hero({ onChoose, hasVideo }) {
   const { photo } = HERO;
   const srcSet = (ext) => photo.widths.map((w) => `${photo.base}-${w}.${ext} ${w}w`).join(', ');
-  const geo = [SITE.city, SITE.area].filter(Boolean).join('. ');
   return (
     <section className="hero" id="top" aria-labelledby="hero-title">
-      <div className="hero__in">
+      <div className="hero__glow" aria-hidden="true" />
+      <div className="wrap hero__in">
         <div className="hero__text">
-          <p className="hero__role">{SITE.role}</p>
-          <h1 id="hero-title">{SITE.name}</h1>
-          {geo && <p className="hero__geo">{geo}</p>}
+          <h1 id="hero-title">
+            <span className="hero__name">{SITE.name}</span>
+            <span className="hero__role">
+              {SITE.role} {SITE.cityIn}
+            </span>
+          </h1>
           <p className="hero__lead">{HERO.lead}</p>
           <div className="hero__actions">
-            <a className="btn btn--accent" href="#contact">
+            <a className="btn btn--primary" href="#contact">
               Узнать, свободна ли дата
             </a>
             {hasVideo ? (
-              <a className="hero__link" href="#video">
+              <a className="link" href="#media">
                 Смотреть видео
               </a>
             ) : (
               SITE.vk && (
-                <a className="hero__link" href={SITE.vk} target="_blank" rel="noopener noreferrer">
+                <a className="link" href={SITE.vk} target="_blank" rel="noopener noreferrer">
                   Написать во VK<span className="sr-only"> (откроется в новой вкладке)</span>
                 </a>
               )
@@ -33,7 +36,7 @@ export default function Hero({ onChoose, hasVideo }) {
           </div>
           <div className="hero__pick">
             <p className="hero__pick-label" id="hero-pick">
-              Или сразу выберите повод:
+              Или сразу выберите повод
             </p>
             <ul className="hero__chips" aria-labelledby="hero-pick">
               {FORMATS.map((f) => (
@@ -47,6 +50,7 @@ export default function Hero({ onChoose, hasVideo }) {
           </div>
         </div>
         <figure className="hero__photo">
+          <span className="hero__frame" aria-hidden="true" />
           <picture>
             <source type="image/avif" srcSet={srcSet('avif')} sizes={SIZES} />
             <img

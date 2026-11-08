@@ -34,9 +34,20 @@ function seo() {
     // Услуги — форматы с сайта; цены и география не указываются, пока не подтверждены.
     makesOffer: FORMATS.map((f) => ({
       '@type': 'Offer',
-      itemOffered: { '@type': 'Service', name: `Ведущая: ${f.title.toLowerCase()}`, serviceType: 'Ведение праздников' },
+      itemOffered: {
+        '@type': 'Service',
+        name: `Ведущая: ${f.title.toLowerCase()}`,
+        serviceType: 'Ведение мероприятий',
+        ...(SITE.city ? { areaServed: { '@type': 'City', name: SITE.city } } : {}),
+      },
     })),
-    ...(SITE.city ? { areaServed: SITE.city } : {}),
+    // Город подтверждён заказчиком; регион и адрес не указаны, пока не подтверждены.
+    ...(SITE.city
+      ? {
+          workLocation: { '@type': 'Place', address: { '@type': 'PostalAddress', addressLocality: SITE.city, addressCountry: 'RU' } },
+          areaServed: { '@type': 'City', name: SITE.city },
+        }
+      : {}),
   };
   return {
     name: 'site-seo',

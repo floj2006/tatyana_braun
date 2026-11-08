@@ -26,7 +26,7 @@ export default function Header({ nav }) {
             ))}
           </ul>
         </nav>
-        <a href="#contact" className="btn btn--accent btn--sm header__cta">Узнать дату</a>
+        <a href="#contact" className="btn btn--primary btn--sm header__cta">Узнать дату</a>
         <button
           ref={btn}
           type="button"

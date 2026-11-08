@@ -3,12 +3,16 @@ export default function Formats({ items, selected, onChoose }) {
   return (
     <section className="section formats reveal" id="formats" aria-labelledby="formats-title">
       <div className="wrap">
-        <h2 id="formats-title">Какие праздники ведёт Татьяна</h2>
+        <div className="section__head">
+          <h2 id="formats-title">Форматы мероприятий</h2>
+          <p className="lead">Выберите свой, и он сразу окажется в форме заявки.</p>
+        </div>
         <ul className="formats__list">
-          {items.map((f) => {
+          {items.map((f, i) => {
             const active = f.id === selected;
             return (
               <li key={f.id} className={`formats__row${active ? ' is-active' : ''}`}>
+                <span className="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
                 <h3>{f.title}</h3>
                 <p>{f.text}</p>
                 {/* Кнопка растянута на всю строку (::after), поэтому кликабельна вся строка. */}

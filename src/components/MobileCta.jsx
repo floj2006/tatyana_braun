@@ -23,7 +23,7 @@ export default function MobileCta() {
   const shown = heroGone && !atContact;
   return (
     <div className={`mobile-cta${shown ? ' is-shown' : ''}`} aria-hidden={!shown}>
-      <a className="btn btn--accent btn--block" href="#contact" tabIndex={shown ? 0 : -1}>
+      <a className="btn btn--primary btn--block" href="#contact" tabIndex={shown ? 0 : -1}>
         Узнать, свободна ли дата
       </a>
     </div>
