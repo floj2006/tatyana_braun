@@ -1,10 +1,35 @@
 /**
- * Копирует текст. Возвращает true при успехе.
- * Сначала Clipboard API; если он недоступен или запрещён, пробуем выделить текст
- * в переданном поле и выполнить команду копирования. Если и это не вышло — false,
- * и интерфейс предлагает скопировать вручную (текст уже выделен).
+ * Синхронное копирование внутри обработчика клика. Нужно, чтобы скопировать текст
+ * и сразу открыть VK в новой вкладке: асинхронный Clipboard API в этот момент может
+ * отказать из-за потери фокуса. Возвращает true при успехе.
  */
-export async function copyText(text, field) {
+export function copySync(text) {
+  if (typeof document === 'undefined') return false;
+  const active = document.activeElement;
+  const buffer = document.createElement('textarea');
+  buffer.value = text;
+  buffer.setAttribute('readonly', '');
+  buffer.setAttribute('aria-hidden', 'true');
+  buffer.className = 'copy-buffer';
+  document.body.appendChild(buffer);
+  buffer.select();
+  buffer.setSelectionRange(0, text.length);
+  let ok = false;
+  try {
+    ok = document.execCommand('copy') === true;
+  } catch {
+    ok = false;
+  }
+  buffer.remove();
+  active?.focus?.({ preventScroll: true });
+  return ok;
+}
+
+/**
+ * Копирование по отдельной кнопке: сначала Clipboard API, затем синхронный способ.
+ * Если не вышло ни так, ни так — false, и интерфейс предлагает скопировать вручную.
+ */
+export async function copyText(text) {
   try {
     if (navigator.clipboard?.writeText) {
       await navigator.clipboard.writeText(text);
@@ -13,12 +38,5 @@ export async function copyText(text, field) {
   } catch {
     // переходим к запасному способу
   }
-  if (!field) return false;
-  field.focus();
-  field.select();
-  try {
-    return document.execCommand('copy') === true;
-  } catch {
-    return false;
-  }
+  return copySync(text);
 }

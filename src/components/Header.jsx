@@ -1,24 +1,20 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { SITE } from '../content/site.js';
 
 export default function Header({ nav }) {
   const [open, setOpen] = useState(false);
   const btn = useRef(null);
 
-  useEffect(() => {
-    if (!open) return undefined;
-    const onKey = (e) => {
-      if (e.key === 'Escape') {
-        setOpen(false);
-        btn.current?.focus();
-      }
-    };
-    document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
-  }, [open]);
+  // Escape закрывает меню, фокус возвращается на кнопку. Фокус при открытом меню всегда в шапке.
+  function onKeyDown(e) {
+    if (e.key === 'Escape' && open) {
+      setOpen(false);
+      btn.current?.focus();
+    }
+  }
 
   return (
-    <header className="header">
+    <header className="header" onKeyDown={onKeyDown}>
       <div className="wrap header__in">
         <a href="#top" className="logo">{SITE.name}</a>
         <nav className={`nav${open ? ' is-open' : ''}`} id="site-nav" aria-label="Разделы сайта">

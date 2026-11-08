@@ -1,6 +1,8 @@
 import { safeUrl } from '../content/site.js';
 
-// Только реальные отзывы с автором: { id, author, event, text, source }. Без них раздел не рендерится.
+const SOURCE_HOSTS = ['vk.ru', 'vk.com', 'm.vk.ru', 'm.vk.com'];
+
+// Только реальные отзывы с автором: текстом или скриншотом. Без них раздел не рендерится.
 export default function Reviews({ items }) {
   if (!items?.length) return null;
   return (
@@ -9,19 +11,25 @@ export default function Reviews({ items }) {
         <h2 id="reviews-title">Отзывы</h2>
         <div className="reviews__list">
           {items.map((r, i) => {
-            const src = safeUrl(r.source || '', ['vk.ru', 'vk.com', 'm.vk.ru', 'm.vk.com']);
+            const src = safeUrl(r.source || '', SOURCE_HOSTS);
             return (
-              <figure className="review" key={r.id ?? i}>
-                <blockquote>
-                  <p>{r.text}</p>
-                </blockquote>
+              <figure className={`review${r.image ? ' review--image' : ''}`} key={r.id ?? i}>
+                {r.image ? (
+                  <img src={r.image.src} width={r.image.width} height={r.image.height} alt={r.image.alt} loading="lazy" decoding="async" />
+                ) : (
+                  <blockquote>
+                    <p>{r.text}</p>
+                  </blockquote>
+                )}
                 <figcaption>
                   {r.author}
                   {r.event && `, ${r.event}`}
                   {src && (
                     <>
                       {' · '}
-                      <a href={src} target="_blank" rel="noopener noreferrer">Источник</a>
+                      <a href={src} target="_blank" rel="noopener noreferrer">
+                        Источник<span className="sr-only"> (откроется в новой вкладке)</span>
+                      </a>
                     </>
                   )}
                 </figcaption>

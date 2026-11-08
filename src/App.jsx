@@ -1,10 +1,11 @@
 import { useRef, useState } from 'react';
-import { EVENTS, FAQ, FORMATS, PROCESS, REVIEWS, STYLE, TERMS } from './content/site.js';
+import { EVENTS, FAQ, FORMATS, PROCESS, REVIEWS, STYLE, TERMS, VIDEOS } from './content/site.js';
 import { useReveal } from './lib/useReveal.js';
 import Header from './components/Header.jsx';
 import Hero from './components/Hero.jsx';
 import Style from './components/Style.jsx';
 import Formats from './components/Formats.jsx';
+import Videos from './components/Videos.jsx';
 import Events from './components/Events.jsx';
 import Reviews from './components/Reviews.jsx';
 import Process from './components/Process.jsx';
@@ -16,6 +17,7 @@ import MobileCta from './components/MobileCta.jsx';
 
 // Пункты меню только для разделов, у которых есть данные.
 const NAV = [
+  ['video', 'Видео', VIDEOS.length],
   ['style', 'Стиль', STYLE.items.length],
   ['formats', 'Форматы', FORMATS.length],
   ['events', 'Праздники', EVENTS.length],
@@ -47,7 +49,8 @@ export default function App() {
       <a className="skip" href="#main">К содержимому</a>
       <Header nav={NAV} />
       <main id="main" tabIndex={-1}>
-        <Hero />
+        <Hero onChoose={chooseFormat} hasVideo={VIDEOS.length > 0} />
+        <Videos items={VIDEOS} />
         <Style data={STYLE} />
         <Formats items={FORMATS} selected={format} onChoose={chooseFormat} />
         <Events items={EVENTS} />

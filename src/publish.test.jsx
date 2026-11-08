@@ -5,12 +5,14 @@ import App from './App.jsx';
 import Events from './components/Events.jsx';
 import Reviews from './components/Reviews.jsx';
 import Terms from './components/Terms.jsx';
-import { EVENTS, REVIEWS, SITE, TERMS } from './content/site.js';
+import Videos from './components/Videos.jsx';
+import { EVENTS, REVIEWS, SITE, TERMS, VIDEOS } from './content/site.js';
 import { HEADER_CSP } from '../csp.js';
 import vercel from '../vercel.json';
 
 describe('разделы без данных не рендерятся', () => {
-  it('мероприятия и отзывы', () => {
+  it('мероприятия, отзывы и видео', () => {
+    expect(renderToString(<Videos items={[]} />)).toBe('');
     expect(renderToString(<Events items={[]} />)).toBe('');
     expect(renderToString(<Reviews items={[]} />)).toBe('');
   });
@@ -40,6 +42,25 @@ describe('разделы с данными рендерятся корректн
     expect(html).not.toContain('evil.example');
   });
 
+  it('видео из VK открывается в новой вкладке, чужой хост не выводится', () => {
+    const vk = renderToString(<Videos items={[{ id: 'a', title: 'Свадьба', url: 'https://vkvideo.ru/video-1_2' }]} />);
+    expect(vk).toContain('href="https://vkvideo.ru/video-1_2"');
+    expect(vk).toContain('noopener');
+    const evil = renderToString(<Videos items={[{ id: 'b', title: 'x', url: 'https://evil.example/v' }]} />);
+    expect(evil).not.toContain('evil.example');
+  });
+
+  it('своё видео не грузится до нажатия: только постер', () => {
+    const html = renderToString(<Videos items={[{ id: 'a', title: 'Юбилей', src: '/video/a.mp4', poster: { src: '/img/a.jpg', width: 1280, height: 720 } }]} />);
+    expect(html).not.toContain('<video');
+    expect(html).toContain('loading="lazy"');
+  });
+
+  it('отзыв-скриншот выводится картинкой с alt', () => {
+    const html = renderToString(<Reviews items={[{ id: 1, author: 'Олег', event: 'юбилей', image: { src: '/img/r.webp', width: 600, height: 900, alt: 'Спасибо за вечер' } }]} />);
+    expect(html).toContain('alt="Спасибо за вечер"');
+  });
+
   it('мероприятие выводит фото с размерами и ленивой загрузкой', () => {
     const html = renderToString(
       <Events items={[{ id: 'a', title: 'Свадьба Ани и Вити', format: 'Свадьба', date: 'июль 2026', story: 'История', photos: [{ src: '/img/a.webp', width: 800, height: 600, alt: 'Танец' }] }]} />,
@@ -61,6 +82,8 @@ describe('публичная страница', () => {
     if (!REVIEWS.length) expect(html).not.toContain('id="reviews"');
     if (!EVENTS.length) expect(html).not.toContain('href="#events"');
     if (!REVIEWS.length) expect(html).not.toContain('href="#reviews"');
+    if (!VIDEOS.length) expect(html).not.toContain('id="video"');
+    if (!VIDEOS.length) expect(html).not.toContain('href="#video"');
   });
 
   it('не выводит город, пока он не подтверждён', () => {

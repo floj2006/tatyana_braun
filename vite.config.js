@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import { SITE } from './src/content/site.js';
+import preact from '@preact/preset-vite';
+import { FORMATS, SITE } from './src/content/site.js';
 import { META_CSP } from './csp.js';
 
 // Адрес сайта для canonical, Open Graph, sitemap и JSON-LD.
@@ -31,6 +31,12 @@ function seo() {
     url: `${url}/`,
     image: `${url}/img/og.jpg`,
     sameAs: [SITE.vk, SITE.telegram].filter(Boolean),
+    // Услуги — форматы с сайта; цены и география не указываются, пока не подтверждены.
+    makesOffer: FORMATS.map((f) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: `Ведущая: ${f.title.toLowerCase()}`, serviceType: 'Ведение праздников' },
+    })),
+    ...(SITE.city ? { areaServed: SITE.city } : {}),
   };
   return {
     name: 'site-seo',
@@ -60,8 +66,28 @@ function seo() {
   };
 }
 
+// Preload кириллических шрифтов первого экрана: имена файлов с хешами известны только после сборки.
+function preloadFonts() {
+  return {
+    name: 'preload-fonts',
+    apply: (_config, env) => env.command === 'build' && !env.isSsrBuild,
+    transformIndexHtml: {
+      order: 'post',
+      handler: (_html, ctx) =>
+        Object.keys(ctx.bundle ?? {})
+          .filter((f) => /(prata|onest)-cyrillic-[\w-]+\.woff2$/.test(f))
+          .map((f) => ({
+            tag: 'link',
+            attrs: { rel: 'preload', as: 'font', type: 'font/woff2', href: `/${f}`, crossorigin: '' },
+            injectTo: 'head',
+          })),
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [react(), seo()],
+  // Preact вместо React: тот же API через preact/compat, но ~4 КБ вместо ~60 КБ gzip.
+  plugins: [preact({ prerender: { enabled: false } }), seo(), preloadFonts()],
   build: { assetsInlineLimit: 0 },
   test: { environment: 'node' },
 });

@@ -11,8 +11,8 @@ ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / 'assets-src'
 IMG = ROOT / 'public' / 'img'
 PUB = ROOT / 'public'
-PRATA = ROOT / 'node_modules/@fontsource/prata/files/prata-cyrillic-400-normal.woff2'
-ONEST = ROOT / 'node_modules/@fontsource-variable/onest/files/onest-cyrillic-wght-normal.woff2'
+PRATA = ROOT / 'src/assets/fonts/prata-cyrillic.woff2'
+ONEST = ROOT / 'src/assets/fonts/onest-cyrillic.woff2'
 
 PAPER = (247, 242, 235)
 INK = (30, 25, 21)
@@ -27,7 +27,9 @@ def hero():
     for w in (480, 800, 1120):
         w = min(w, im.width)
         h = round(im.height * w / im.width)
-        im.resize((w, h), Image.LANCZOS).save(IMG / f'hero-{w}.webp', 'WEBP', quality=78, method=6)
+        r = im.resize((w, h), Image.LANCZOS)
+        r.save(IMG / f'hero-{w}.avif', 'AVIF', quality=42, speed=4)
+        r.save(IMG / f'hero-{w}.webp', 'WEBP', quality=74, method=6)
         print('hero', w, h)
     return im
 

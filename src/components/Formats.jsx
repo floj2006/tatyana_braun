@@ -11,8 +11,9 @@ export default function Formats({ items, selected, onChoose }) {
               <li key={f.id} className={`formats__row${active ? ' is-active' : ''}`}>
                 <h3>{f.title}</h3>
                 <p>{f.text}</p>
-                <button type="button" className="btn btn--sm btn--line" aria-pressed={active} onClick={() => onChoose(f.id)}>
-                  {active ? 'Выбрано' : 'Обсудить'}
+                {/* Кнопка растянута на всю строку (::after), поэтому кликабельна вся строка. */}
+                <button type="button" className="formats__pick" aria-pressed={active} onClick={() => onChoose(f.id)}>
+                  {active ? 'Выбрано' : 'Выбрать'}
                   <span className="sr-only">: {f.title.toLowerCase()}</span>
                 </button>
               </li>
