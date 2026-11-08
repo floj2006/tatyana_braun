@@ -83,14 +83,14 @@ export default function Contact({ format, onFormat, titleRef }) {
             Узнать, свободна ли дата
           </h2>
           <p>
-            Я отвечаю в личных сообщениях VK. Отметьте повод, дату и город: текст соберётся сам и скопируется, а моя
-            страница во VK откроется в новой вкладке. Останется написать мне и вставить текст.
+            Я отвечаю в личных сообщениях VK. Отметьте повод, дату и город и нажмите кнопку. Текст сообщения
+            скопируется, и в новой вкладке откроется моя страница во VK. Останется вставить текст в сообщение.
           </p>
           {SITE.vk && (
             <p className="contact__direct">
-              Удобнее своими словами?{' '}
+              Можно написать и без формы,{' '}
               <a href={SITE.vk} target="_blank" rel="noopener noreferrer">
-                Написать мне во VK<span className="sr-only"> (откроется в новой вкладке)</span>
+                сразу мне во VK<span className="sr-only"> (откроется в новой вкладке)</span>
               </a>
             </p>
           )}
@@ -226,7 +226,7 @@ export default function Contact({ format, onFormat, titleRef }) {
               <button className="btn btn--primary btn--block" type="submit">
                 Скопировать текст и открыть VK
               </button>
-              <p className="form__note">Сайт ничего не отправляет и не сохраняет: текст остаётся у вас.</p>
+              <p className="form__note">Сайт ничего не отправляет и не сохраняет.</p>
             </div>
           </form>
 
@@ -236,8 +236,8 @@ export default function Contact({ format, onFormat, titleRef }) {
                 <>
                   <p className="result__title">Скопировать автоматически не получилось</p>
                   <p>
-                    Текст ниже уже выделен: нажмите Ctrl+C или ⌘+C, на телефоне — долгое нажатие и «Скопировать». Затем
-                    откройте VK и вставьте его в сообщение мне.
+                    Текст ниже уже выделен. Скопируйте его (Ctrl+C или ⌘+C, на телефоне долгим нажатием), откройте VK
+                    и вставьте в сообщение мне.
                   </p>
                   <label className="sr-only" htmlFor={id('manual')}>
                     Текст сообщения
@@ -256,8 +256,7 @@ export default function Contact({ format, onFormat, titleRef }) {
                 <>
                   <p className="result__title">Текст скопирован</p>
                   <p>
-                    Во VK откройте диалог со мной и вставьте текст: Ctrl+V или ⌘+V, на телефоне — долгое нажатие и
-                    «Вставить».
+                    Во VK откройте диалог со мной и вставьте текст (Ctrl+V или ⌘+V, на телефоне долгим нажатием).
                   </p>
                   <div className="result__actions">
                     <a className="btn btn--primary btn--sm" href={SITE.vk} target="_blank" rel="noopener noreferrer">

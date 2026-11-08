@@ -5,7 +5,7 @@ export default function Formats({ items, selected, onChoose }) {
       <div className="wrap">
         <div className="section__head">
           <h2 id="formats-title">Форматы мероприятий</h2>
-          <p className="lead">Выберите свой, и он сразу окажется в форме заявки.</p>
+          <p className="lead">Нажмите на подходящий, и он подставится в форму заявки.</p>
         </div>
         <ul className="formats__list">
           {items.map((f, i) => {

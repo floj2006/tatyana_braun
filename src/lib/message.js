@@ -24,7 +24,7 @@ export function formatDate(iso) {
  * on — продолжение фразы «Ищу ведущую на …».
  */
 export function buildMessage({ on, date, noDate, city, guests, comment }) {
-  const lines = [`Здравствуйте, Татьяна! Ищу ведущую на ${clean(on, 60)}.`];
+  const lines = [`Здравствуйте, Татьяна. Ищу ведущую на ${clean(on, 60)}.`];
   lines.push(noDate ? 'Дата: пока не выбрана' : `Дата: ${formatDate(date)}`);
   lines.push(`Город: ${clean(city, LIMITS.city)}`);
   const g = clean(guests, LIMITS.guests);
