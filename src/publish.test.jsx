@@ -78,6 +78,7 @@ describe('разделы с данными рендерятся корректн
     const html = renderToString(<Media photos={[{ id: 'b', base: '/img/photos/01-x', widths: [600, 1200], width: 1200, height: 800, alt: 'Танец', caption: '' }]} />);
     expect(html).toContain('type="image/avif"');
     expect(html).toContain('/img/photos/01-x-1200.webp 1200w');
+    expect(html).not.toContain('<figcaption');
     expect(html).toMatch(/width="1200"/);
     expect(html).toMatch(/loading="lazy"/);
   });
