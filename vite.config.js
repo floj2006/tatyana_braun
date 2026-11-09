@@ -31,7 +31,7 @@ function seo() {
     jobTitle: SITE.role,
     url: `${url}/`,
     image: `${url}/img/og.jpg`,
-    sameAs: [SITE.vk, SITE.telegram].filter(Boolean),
+    sameAs: [SITE.community, SITE.personal, SITE.telegram].filter(Boolean),
     // Услуги — форматы с сайта; цены и география не указываются, пока не подтверждены.
     makesOffer: FORMATS.map((f) => ({
       '@type': 'Offer',

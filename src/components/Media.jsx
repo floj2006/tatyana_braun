@@ -42,6 +42,19 @@ function Clip({ video }) {
   );
 }
 
+// Фото из scripts/import-photos.py: base + widths дают AVIF/WebP разных размеров; src — одиночный файл.
+const PHOTO_SIZES = '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw';
+function PhotoImg({ photo: p }) {
+  if (!p.base) return <img src={p.src} width={p.width} height={p.height} alt={p.alt} loading="lazy" decoding="async" />;
+  const set = (ext) => p.widths.map((w) => `${p.base}-${w}.${ext} ${w}w`).join(', ');
+  return (
+    <picture>
+      <source type="image/avif" srcSet={set('avif')} sizes={PHOTO_SIZES} />
+      <img src={`${p.base}-${p.widths[0]}.webp`} srcSet={set('webp')} sizes={PHOTO_SIZES} width={p.width} height={p.height} alt={p.alt} loading="lazy" decoding="async" />
+    </picture>
+  )
+}
+
 // Реальные фото и видео с праздников. Без материалов раздел не рендерится.
 export default function Media({ photos = [], videos = [] }) {
   if (!photos.length && !videos.length) return null;
@@ -61,7 +74,7 @@ export default function Media({ photos = [], videos = [] }) {
             {photos.map((p) => (
               <li key={p.id}>
                 <figure>
-                  <img src={p.src} width={p.width} height={p.height} alt={p.alt} loading="lazy" decoding="async" />
+                  <PhotoImg photo={p} />
                   {p.caption && <figcaption>{p.caption}</figcaption>}
                 </figure>
               </li>

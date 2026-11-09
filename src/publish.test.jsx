@@ -36,6 +36,20 @@ describe('разделы с данными рендерятся корректн
     expect(html).toContain('rel="noopener noreferrer"');
   });
 
+  it('длинный отзыв целиком в HTML, свёрнут визуально и раскрывается кнопкой', () => {
+    const text = 'Очень длинный отзыв. '.repeat(30);
+    const html = renderToString(<Reviews items={[{ id: 'l', author: '', event: 'Юбилей', text, source: '' }]} />);
+    expect(html).toContain(text.trim());
+    expect(html).toContain('is-clamped');
+    expect(html).toMatch(/aria-expanded="false"/);
+    expect(html).not.toMatch(/<figcaption>,/);
+  });
+
+  it('отзыв без автора и повода не выводит пустую подпись', () => {
+    const html = renderToString(<Reviews items={[{ id: 's', author: '', event: '', text: 'Спасибо!', source: '' }]} />);
+    expect(html).not.toContain('<figcaption');
+  });
+
   it('ссылка на источник отзыва с чужого домена не выводится', () => {
     const html = renderToString(<Reviews items={[{ author: 'Анна', event: '', text: 'Спасибо!', source: 'https://evil.example/x' }]} />);
     expect(html).not.toContain('evil.example');
@@ -58,6 +72,14 @@ describe('разделы с данными рендерятся корректн
   it('отзыв-скриншот выводится картинкой с alt', () => {
     const html = renderToString(<Reviews items={[{ id: 1, author: 'Олег', event: 'юбилей', image: { src: '/img/r.webp', width: 600, height: 900, alt: 'Спасибо за вечер' } }]} />);
     expect(html).toContain('alt="Спасибо за вечер"');
+  });
+
+  it('фото из импорта выводятся как AVIF/WebP с srcset и размерами', () => {
+    const html = renderToString(<Media photos={[{ id: 'b', base: '/img/photos/01-x', widths: [600, 1200], width: 1200, height: 800, alt: 'Танец', caption: '' }]} />);
+    expect(html).toContain('type="image/avif"');
+    expect(html).toContain('/img/photos/01-x-1200.webp 1200w');
+    expect(html).toMatch(/width="1200"/);
+    expect(html).toMatch(/loading="lazy"/);
   });
 
   it('фото выводятся с размерами, подписью и ленивой загрузкой', () => {

@@ -21,10 +21,17 @@ export default function Footer() {
           ))}
         </ul>
         <ul className="footer__links">
-          {SITE.vk && (
+          {SITE.community && (
             <li>
-              <a href={SITE.vk} target="_blank" rel="noopener noreferrer">
-                VK<span className="sr-only"> (откроется в новой вкладке)</span>
+              <a href={SITE.community} target="_blank" rel="noopener noreferrer">
+                Сообщество VK<span className="sr-only"> (откроется в новой вкладке)</span>
+              </a>
+            </li>
+          )}
+          {SITE.personal && (
+            <li>
+              <a href={SITE.personal} target="_blank" rel="noopener noreferrer">
+                Личная страница VK<span className="sr-only"> (откроется в новой вкладке)</span>
               </a>
             </li>
           )}

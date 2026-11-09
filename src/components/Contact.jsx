@@ -96,8 +96,9 @@ export default function Contact({ format, onFormat, titleRef }) {
             Узнать, свободна ли дата
           </h2>
           <p>
-            Я отвечаю в личных сообщениях VK. Отметьте повод, дату и город и нажмите кнопку. Текст сообщения
-            скопируется, и в новой вкладке откроется моя страница во VK. Останется вставить текст в сообщение.
+            Заявки принимаю в сообщениях моего сообщества во VK. Отметьте повод, дату и город и нажмите кнопку.
+            Текст сообщения скопируется, и в новой вкладке откроется диалог с сообществом. Останется вставить текст
+            и отправить.
           </p>
           {SITE.vk && (
             <p className="contact__direct">
@@ -260,7 +261,7 @@ export default function Contact({ format, onFormat, titleRef }) {
                   <p className="result__title">Скопировать автоматически не получилось</p>
                   <p>
                     Текст ниже уже выделен. Скопируйте его (Ctrl+C или ⌘+C, на телефоне долгим нажатием), откройте VK
-                    и вставьте в сообщение мне.
+                    и вставьте в сообщение сообществу.
                   </p>
                   <label className="sr-only" htmlFor={id('manual')}>
                     Текст сообщения
@@ -279,7 +280,7 @@ export default function Contact({ format, onFormat, titleRef }) {
                 <>
                   <p className="result__title">Текст скопирован</p>
                   <p>
-                    Во VK откройте диалог со мной и вставьте текст (Ctrl+V или ⌘+V, на телефоне долгим нажатием).
+                    Во VK вставьте его в сообщение сообществу (Ctrl+V или ⌘+V, на телефоне долгим нажатием) и отправьте.
                   </p>
                   <div className="result__actions">
                     <a className="btn btn--primary btn--sm" href={SITE.vk} target="_blank" rel="noopener noreferrer">
