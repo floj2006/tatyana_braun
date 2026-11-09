@@ -82,7 +82,7 @@ ul,ol{margin:0;padding:0}
 .hero{position:relative;display:flex;align-items:center;min-height:min(calc(100svh - var(--header)),940px);overflow:hidden;background:linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%)}
 .hero__photo{position:absolute;top:0;right:0;bottom:0;width:52%;margin:0}
 .hero__photo picture,.hero__photo img{display:block;width:100%;height:100%}
-.hero__photo img{object-fit:cover;object-position:50% 18%}
+.hero__photo img{object-fit:cover;object-position:78% 22%}
 /* мягкий переход фото в серебристый фон слева */
 .hero__photo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--bg) 0%,rgba(245,245,247,.55) 14%,rgba(245,245,247,0) 34%)}
 .hero__in{position:relative;z-index:1;padding:clamp(48px,7vw,104px) 0}
@@ -112,6 +112,10 @@ ul,ol{margin:0;padding:0}
 /* Обо мне */
 .about__in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,7vw,120px);align-items:start}
 .about__in .title{margin:0}
+.about__in--photo{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);align-items:center}
+.about__in--photo .title{margin-bottom:.6em}
+.about__photo{margin:0}
+.about__photo img{width:100%;height:auto;border-radius:var(--radius);box-shadow:var(--shadow)}
 .about__facts{margin:0;display:grid}
 .about__facts div{display:grid;grid-template-columns:minmax(110px,.35fr) minmax(0,1fr);gap:8px 32px;padding:24px 0;border-top:1px solid var(--line)}
 .about__facts div:last-child{border-bottom:1px solid var(--line)}
@@ -187,22 +191,43 @@ ul,ol{margin:0;padding:0}
 .clip__play::after{content:"";position:absolute;left:31px;top:26px;border-style:solid;border-width:12px 0 12px 19px;border-color:transparent transparent transparent var(--ink)}
 .clip__poster:hover .clip__play{transform:scale(1.06)}
 .clip figcaption,.media__photos figcaption{margin-top:10px;font-size:.95rem;color:var(--muted)}
-/* мозаика: каждое третье фото выше остальных */
-.media__photos{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:240px;gap:16px}
-.media__photos li:nth-child(5n+1),.media__photos li:nth-child(5n+4){grid-row:span 2}
-.media__photos figure{margin:0;height:100%;display:flex;flex-direction:column}
-.media__photos picture{flex:1;min-height:0;display:block}
-.media__photos picture img{height:100%}
-.media__photos img{flex:1;width:100%;min-height:0;object-fit:cover;border-radius:var(--radius)}
+/* Карусель: нативная прокрутка со scroll-snap, кнопки рядом с лентой */
+.carousel__track{overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:4px;overscroll-behavior-x:contain;scrollbar-width:none;border-radius:var(--radius)}
+.carousel__track::-webkit-scrollbar{display:none}
+.carousel__track:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+.carousel__list{list-style:none;display:flex;gap:20px;padding:4px 4px 28px}
+.carousel__list>li{flex:none;scroll-snap-align:start}
+.carousel__nav{display:flex;justify-content:flex-end;gap:12px;margin-top:4px}
+.carousel__btn{position:relative;width:52px;height:52px;border:1px solid var(--field);border-radius:50%;background:var(--white);color:var(--ink);cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.carousel__btn::before{content:"";position:absolute;left:50%;top:50%;width:10px;height:10px;border:solid currentColor;border-width:1.5px 1.5px 0 0;transform:translate(-30%,-50%) rotate(45deg)}
+.carousel__btn--prev::before{transform:translate(-70%,-50%) rotate(-135deg)}
+.carousel__btn:hover:not(:disabled){background:var(--ink);color:var(--on-dark);border-color:var(--ink)}
+.carousel__btn:disabled{cursor:default;opacity:.35}
+/* Фото: одна высота, ширина по пропорциям кадра — ничего не обрезается */
+.media__photos figure{margin:0}
+.media__photos picture{display:block}
+.media__photos img{height:clamp(320px,56vh,540px);width:auto;max-width:none;border-radius:var(--radius);background:var(--bg-2)}
 .reviews{background:var(--bg-2)}
-.reviews__list{display:grid;align-items:start;grid-auto-flow:column;grid-auto-columns:min(82%,380px);gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 4px 16px;scrollbar-width:thin}
-.review{display:flex;flex-direction:column;margin:0;padding:28px;border-radius:var(--radius);background:var(--white);scroll-snap-align:start}
-.review__text.is-clamped p{display:-webkit-box;-webkit-line-clamp:8;line-clamp:8;-webkit-box-orient:vertical;overflow:hidden}
-.review__more{align-self:flex-start;min-height:44px;margin:-4px 0 8px;padding:0;border:0;background:none;font:inherit;font-size:.92rem;font-weight:600;color:var(--graphite);text-decoration:underline;text-underline-offset:4px;cursor:pointer}
-.review__more:hover{text-decoration-thickness:2px}
+.reviews__list .carousel__list{align-items:stretch}
+.reviews__item{display:flex;width:min(84vw,400px)}
+/* Отзыв-обложка: светлая карта с двойной серебряной рамкой и крупной кавычкой; каждая третья — графитовая */
+.review{position:relative;display:flex;flex-direction:column;width:100%;margin:0;padding:44px 36px 34px;border-radius:var(--radius);background:linear-gradient(160deg,var(--white) 0%,#f3f4f6 55%,#e9eaee 100%);box-shadow:0 16px 30px -22px rgba(32,33,38,.4);isolation:isolate}
+.review::before{content:"";position:absolute;inset:10px;border:1px solid var(--line);border-radius:10px;pointer-events:none;z-index:-1}
+.review::after{content:"\201C";content:"\201C" / "";position:absolute;top:22px;right:28px;font-family:var(--serif);font-size:7rem;line-height:1;color:var(--line);pointer-events:none;z-index:-1}
+.review__event{position:relative;margin:0 0 22px;padding-bottom:14px;font-size:.78rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.review__event::after{content:"";position:absolute;left:0;bottom:0;width:56px;height:1px;background:var(--metal-line)}
 .review blockquote{margin:0}
-.review p{margin:0 0 16px;font-family:var(--serif);font-size:1.08rem;line-height:1.55}
-.review figcaption{margin-top:auto;color:var(--muted);font-weight:500}
+.review p{margin:0 0 16px}
+.review__text p{font-family:var(--serif);font-size:1.08rem;line-height:1.6}
+.review__text.is-clamped p{display:-webkit-box;-webkit-line-clamp:8;line-clamp:8;-webkit-box-orient:vertical;overflow:hidden}
+.review__more{align-self:flex-start;min-height:44px;margin:-4px 0 8px;padding:0;border:0;background:none;font:inherit;font-size:.92rem;font-weight:600;color:inherit;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.review__more:hover{text-decoration-thickness:2px}
+.review figcaption{margin-top:auto;padding-top:16px;border-top:1px solid var(--line);font-weight:500;color:var(--muted)}
+.reviews__item:nth-child(3n+2) .review{background:linear-gradient(160deg,#30333a 0%,var(--card-dark) 55%,#202126 100%);color:var(--on-dark)}
+.reviews__item:nth-child(3n+2) .review::before{border-color:rgba(167,171,180,.35)}
+.reviews__item:nth-child(3n+2) .review::after{color:rgba(167,171,180,.3)}
+.reviews__item:nth-child(3n+2) .review__event,.reviews__item:nth-child(3n+2) .review figcaption{color:var(--on-dark-muted)}
+.reviews__item:nth-child(3n+2) .review figcaption{border-top-color:rgba(167,171,180,.35)}
 .review--image{padding:12px}
 .review--image img{border-radius:10px;margin-bottom:12px}
 
@@ -338,13 +363,12 @@ ul,ol{margin:0;padding:0}
   .approach__item{min-height:0}
   .approach__item h3{padding-top:24px}
   .pricing__foot{grid-template-columns:1fr}
-  .media__photos{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 /* Телефон: фото сверху, текст под ним на светлом фоне — ничего не лежит на лице */
 @media (max-width:899px){
   .hero{flex-direction:column;align-items:stretch;min-height:0}
   .hero__photo{position:relative;width:100%;height:clamp(240px,52svh,560px)}
-  .hero__photo img{object-position:50% 12%}
+  .hero__photo img{object-position:74% 20%}
   /* мягкий переход нижнего края фото в фон, без затемнения */
   .hero__photo::after{background:linear-gradient(180deg,rgba(245,245,247,0) 82%,var(--bg) 100%)}
   .hero__in{padding:14px 0 40px}
@@ -363,12 +387,17 @@ ul,ol{margin:0;padding:0}
   .hero__scroll{display:none}
   .section__head,.approach__head,.about__in,.faq__in,.contact__in{grid-template-columns:1fr}
   .about__facts div{grid-template-columns:1fr;gap:4px}
+  .about__photo{max-width:420px}
   .formats__row{grid-template-columns:44px minmax(0,1fr);gap:6px 12px;padding:26px 12px;margin:0 -12px}
   .formats__body,.formats__pick{grid-column:2}
   .formats__pick{justify-self:start}
   .pricing{text-align:left}
 }
 @media (max-width:640px){
+  /* одна высота: вертикальные кадры по два на экран, горизонтальные чуть подрезаны по краям */
+  .media__photos img{height:min(72vw,56vh);width:auto;max-width:84vw;object-fit:cover}
+  .carousel__list{gap:14px}
+  .review{padding:40px 28px 30px}
   body{font-size:1rem}
   .title{line-height:1.1}
   .hero__actions .btn{flex:1 1 100%}
@@ -376,7 +405,6 @@ ul,ol{margin:0;padding:0}
   .pricing__cards,.pricing__dl{grid-template-columns:1fr}
   .pricing__cards li{min-height:0;gap:20px}
   .process__list{grid-template-columns:1fr}
-  .media__photos{grid-auto-rows:180px}
   .form__row,.form__row--extra{grid-template-columns:1fr}
   .result__actions .btn{flex:1 1 100%}
   .faq__item summary{padding-right:44px}
@@ -389,7 +417,7 @@ ul,ol{margin:0;padding:0}
 /* низкий экран телефона (например, 320×568): фото ниже, чтобы кнопка осталась в первом экране */
 @media (max-height:620px) and (max-width:899px){
   .hero__photo{height:clamp(200px,40svh,320px)}
-  .hero__photo img{object-position:50% 20%}
+  .hero__photo img{object-position:74% 22%}
 }
 @media (max-width:359px){
   .logo{font-size:.95rem;letter-spacing:.1em}

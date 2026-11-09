@@ -29,9 +29,12 @@ export const SITE = {
   vk: safeUrl('https://vk.me/tatiana_braun_event', ['vk.me']),
   community: safeUrl('https://vk.ru/tatiana_braun_event', ['vk.ru', 'vk.com']),
   personal: safeUrl('https://vk.ru/brauntv', ['vk.ru', 'vk.com']),
+  // Публичный рабочий телефон из описания сообщества, подтверждён Татьяной.
+  phone: '+7 902 869-02-89',
+  phoneHref: 'tel:+79028690289',
   telegram: safeUrl('', ['t.me']),
   // Номер WhatsApp только цифрами с кодом страны, например '79991234567'. Пусто: кнопки WhatsApp нет.
-  whatsapp: '',
+  whatsapp: '79028690289',
 };
 
 // Яндекс.Метрика включается, только когда заполнены оба поля: номер счётчика и ссылка на политику
@@ -52,8 +55,8 @@ export const HERO = {
     base: '/img/hero',
     widths: [480, 800, 1120],
     width: 1120,
-    height: 1989,
-    alt: 'Татьяна Браун с гарнитурой на фоне серебристой стены из пайеток',
+    height: 1494,
+    alt: 'Татьяна Браун с микрофоном у праздничного стола на свадьбе',
   },
 };
 
@@ -65,8 +68,17 @@ export const ABOUT = {
     { label: 'Город', text: `${SITE.city}. Если праздник в другом городе, напишите, где он будет.` },
     { label: 'Праздники', text: 'Свадьбы, юбилеи и дни рождения, корпоративы, детские праздники.' },
     { label: 'Связь', text: 'Сообщения моего сообщества во VK.', link: 'vk' },
+    { label: 'Телефон', text: '+7 902 869-02-89', link: 'phone' },
   ],
   story: [],
+  // Портрет из сообщества (архив Татьяны, 2026-11-09).
+  photo: {
+    base: '/img/photos/01-portrait-piano',
+    widths: [600, 1200],
+    width: 1200,
+    height: 1427,
+    alt: 'Татьяна Браун в светлом костюме у пианино на фоне бордовых штор',
+  },
 };
 
 export const APPROACH = {
@@ -302,6 +314,8 @@ export const TERMS = {
     'План вечера, который можно поправить до праздника',
     'Игры и поздравления под ваших гостей',
     'Ведение праздника по согласованному плану',
+    'Рекомендации проверенных свадебных специалистов',
+    'Консультации, пока идёт подготовка',
   ],
   duration: '',
   equipment: '',
@@ -312,7 +326,15 @@ export const TERMS = {
 // Фото с праздников. Только реальные, с согласия героев праздника:
 // Лучше через scripts/import-photos.py: { id, base, widths, width, height, alt, caption } (AVIF/WebP разных размеров).
 // Или одиночный файл: { id, src, width, height, alt, caption }. caption — формат и месяц, например «Свадьба, июль 2026».
-export const PHOTOS = [];
+export const PHOTOS = [
+  // Фото из сообщества (архив Татьяны, 2026-11-09). Имена клиентов в подписях не указываются.
+  { id: 'wedding-couple', base: '/img/photos/01-a-wedding-couple', widths: [600, 1200], width: 1200, height: 1804, alt: 'Татьяна Браун с микрофоном рядом с женихом и невестой у фотозоны', caption: 'Свадьба' },
+  { id: 'wedding-mic', base: '/img/photos/02-b-wedding-mic', widths: [600, 1200], width: 1200, height: 798, alt: 'Татьяна Браун говорит в микрофон рядом с гостем, чёрно-белый кадр', caption: 'Свадьба' },
+  { id: 'wedding-guests', base: '/img/photos/03-c-wedding-guests', widths: [600, 1200], width: 1200, height: 798, alt: 'Гости за банкетными столами поднимают руки с бумажными предметами', caption: 'Свадьба' },
+  { id: 'wedding-game', base: '/img/photos/04-d-wedding-game', widths: [600, 1200], width: 1200, height: 1804, alt: 'Татьяна Браун и гость держат большую банку в банкетном зале', caption: 'Свадьба' },
+  { id: 'jubilee', base: '/img/photos/05-e-jubilee', widths: [600, 969], width: 969, height: 1280, alt: 'Татьяна Браун между двумя юбиляршами у фотозоны', caption: 'Юбилей, июль 2025' },
+  { id: 'portrait-balloon', base: '/img/photos/06-f-portrait-balloon', widths: [600, 1178], width: 1178, height: 1557, alt: 'Татьяна Браун в жёлтом смотрит через большой голубой воздушный шар', caption: '' },
+];
 
 // Видео с праздников. Свой файл: { id, title, src: '/video/x.mp4', poster: { src, width, height } } —
 // грузится только по нажатию. Ролик во VK: { id, title, url: 'https://vkvideo.ru/…', poster }.

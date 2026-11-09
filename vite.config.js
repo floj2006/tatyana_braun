@@ -32,6 +32,7 @@ function seo() {
     url: `${url}/`,
     image: `${url}/img/og.jpg`,
     sameAs: [SITE.community, SITE.personal, SITE.telegram].filter(Boolean),
+    ...(SITE.phoneHref ? { telephone: SITE.phoneHref.replace('tel:', '') } : {}),
     // Услуги — форматы с сайта; цены и география не указываются, пока не подтверждены.
     makesOffer: FORMATS.map((f) => ({
       '@type': 'Offer',

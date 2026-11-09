@@ -108,6 +108,11 @@ export default function Contact({ format, onFormat, titleRef }) {
               </a>
             </p>
           )}
+          {SITE.phoneHref && (
+            <p className="contact__direct">
+              Или позвоните: <a href={SITE.phoneHref}>{SITE.phone}</a>
+            </p>
+          )}
         </div>
 
         <div className="contact__panel">

@@ -119,6 +119,18 @@ describe('публичная страница', () => {
     for (const a of new Set(anchors)) expect(html, `#${a}`).toContain(`id="${a}"`);
   });
 
+  it('география, кроме Челябинска, не публикуется', () => {
+    for (const r of ROUTES) expect(renderToString(<App route={r} />)).not.toMatch(/Троицк|Октябрьск/);
+  });
+
+  it('телефон кликабельный, фото и отзывы в каруселях с кнопками', () => {
+    if (SITE.phoneHref) expect(html).toContain(`href="${SITE.phoneHref}"`);
+    const tracks = (PHOTOS.length ? 1 : 0) + (REVIEWS.length ? 1 : 0);
+    expect((html.match(/class="carousel__track"/g) || []).length).toBe(tracks);
+    expect((html.match(/class="carousel__btn /g) || []).length).toBe(tracks * 2);
+    expect((html.match(/class="reviews__item"/g) || []).length).toBe(REVIEWS.length);
+  });
+
   it('один h1 и прямая ссылка на VK', () => {
     expect(html.match(/<h1/g)).toHaveLength(1);
     expect(html).toContain(`href="${SITE.vk}"`);

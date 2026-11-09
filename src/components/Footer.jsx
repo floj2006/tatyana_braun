@@ -28,6 +28,11 @@ export default function Footer() {
               </a>
             </li>
           )}
+          {SITE.phoneHref && (
+            <li>
+              <a href={SITE.phoneHref}>{SITE.phone}</a>
+            </li>
+          )}
           {SITE.personal && (
             <li>
               <a href={SITE.personal} target="_blank" rel="noopener noreferrer">
@@ -47,7 +52,7 @@ export default function Footer() {
               <a href={policyUrl()}>Политика конфиденциальности</a>
             </li>
           )}
-                    {SITE.telegram && (
+          {SITE.telegram && (
             <li>
               <a href={SITE.telegram} target="_blank" rel="noopener noreferrer">
                 Telegram<span className="sr-only"> (откроется в новой вкладке)</span>

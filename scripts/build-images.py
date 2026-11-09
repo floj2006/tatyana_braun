@@ -23,11 +23,15 @@ MUTED = (101, 105, 115)
 SILVER = (167, 171, 180)
 GRAPHITE = (54, 57, 64)
 
+# Исходники: фото первого экрана и фото для OG-картинки (на OG лицо должно быть крупным).
+HERO_SRC = SRC / 'hero-wedding.jpg'
+OG_SRC = SRC / 'tatyana-hero.webp'
+
 IMG.mkdir(parents=True, exist_ok=True)
 
 
 def hero():
-    im = Image.open(SRC / 'tatyana-hero.webp').convert('RGB')  # convert снимает EXIF/ICC
+    im = Image.open(HERO_SRC).convert('RGB')  # convert снимает EXIF/ICC
     for w in (480, 800, 1120):
         w = min(w, im.width)
         h = round(im.height * w / im.width)
@@ -77,5 +81,6 @@ def icons():
 
 
 if __name__ == '__main__':
-    og(hero())
+    hero()
+    og(Image.open(OG_SRC).convert('RGB'))
     icons()

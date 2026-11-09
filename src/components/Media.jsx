@@ -1,4 +1,5 @@
 import Title from './Title.jsx';
+import Carousel from './Carousel.jsx';
 import { useState } from 'react';
 import { safeUrl } from '../content/site.js';
 
@@ -43,7 +44,7 @@ function Clip({ video }) {
 }
 
 // Фото из scripts/import-photos.py: base + widths дают AVIF/WebP разных размеров; src — одиночный файл.
-const PHOTO_SIZES = '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw';
+const PHOTO_SIZES = '(min-width: 641px) 40vw, 84vw';
 function PhotoImg({ photo: p }) {
   if (!p.base) return <img src={p.src} width={p.width} height={p.height} alt={p.alt} loading="lazy" decoding="async" />;
   const set = (ext) => p.widths.map((w) => `${p.base}-${w}.${ext} ${w}w`).join(', ');
@@ -52,7 +53,7 @@ function PhotoImg({ photo: p }) {
       <source type="image/avif" srcSet={set('avif')} sizes={PHOTO_SIZES} />
       <img src={`${p.base}-${p.widths[0]}.webp`} srcSet={set('webp')} sizes={PHOTO_SIZES} width={p.width} height={p.height} alt={p.alt} loading="lazy" decoding="async" />
     </picture>
-  )
+  );
 }
 
 // Реальные фото и видео с праздников. Без материалов раздел не рендерится.
@@ -70,7 +71,7 @@ export default function Media({ photos = [], videos = [] }) {
           </div>
         )}
         {photos.length > 0 && (
-          <ul className="media__photos">
+          <Carousel className="media__photos" label="Фотографии с праздников, листаются по горизонтали">
             {photos.map((p) => (
               <li key={p.id}>
                 <figure>
@@ -79,7 +80,7 @@ export default function Media({ photos = [], videos = [] }) {
                 </figure>
               </li>
             ))}
-          </ul>
+          </Carousel>
         )}
       </div>
     </section>
