@@ -55,8 +55,8 @@ export default function Carousel({ label, className = '', extra = null, children
 }
 
 // Кнопка заявки под лентой: без JS ведёт к форме, с JS открывает окно связи.
-export const QuickCta = () => (
-  <a className="btn btn--line" href="#contact" aria-haspopup="dialog" onClick={onQuickClick}>
+export const QuickCta = ({ className = 'btn btn--line' }) => (
+  <a className={className} href="#contact" aria-haspopup="dialog" onClick={onQuickClick}>
     Узнать, свободна ли дата
   </a>
 );
