@@ -1,4 +1,5 @@
 import Title from './Title.jsx';
+import { onQuickClick } from '../lib/quickContact.js';
 
 function rowsOf(data) {
   return [
@@ -25,7 +26,7 @@ export default function Terms({ data }) {
         {data.includes?.length > 0 && (
           <>
             <p className="pricing__sub">Входит в любой праздник</p>
-            <ul className="pricing__cards">
+            <ul className="pricing__cards stagger">
               {data.includes.map((x, i) => (
                 <li key={x}>
                   <span className="num" aria-hidden="true">
@@ -48,7 +49,7 @@ export default function Terms({ data }) {
               ))}
             </dl>
           )}
-          <a className="btn btn--primary" href="#contact">
+          <a className="btn btn--primary" href="#contact" aria-haspopup="dialog" onClick={onQuickClick}>
             Узнать стоимость для своей даты
           </a>
         </div>

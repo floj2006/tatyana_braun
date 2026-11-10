@@ -35,7 +35,7 @@ export default function About({ data }) {
         <div className="about__body">
           <Title id="about-title" text={data.title} />
           {data.facts?.length > 0 && (
-            <dl className="about__facts">
+            <dl className="about__facts stagger">
               {data.facts.map((f) => (
                 <div key={f.label}>
                   <dt>{f.label}</dt>

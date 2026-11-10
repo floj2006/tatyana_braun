@@ -9,9 +9,9 @@ export default function Formats({ items, selected, onChoose }) {
       <div className="wrap">
         <div className="section__head">
           <Title id="formats-title" text="Форматы" />
-          <p className="lead">Нажмите на подходящий, и он подставится в форму заявки.</p>
+          <p className="lead">Нажмите на подходящий, чтобы узнать, свободна ли дата.</p>
         </div>
-        <ul className="formats__list">
+        <ul className="formats__list stagger">
           {items.map((f, i) => {
             const active = f.id === selected;
             return (
@@ -32,8 +32,8 @@ export default function Formats({ items, selected, onChoose }) {
                   )}
                 </div>
                 {/* Кнопка растянута на всю строку (::after), поэтому кликабельна вся строка. */}
-                <button type="button" className="formats__pick" aria-pressed={active} onClick={() => onChoose(f.id)}>
-                  {active ? 'Выбрано' : 'Выбрать'}
+                <button type="button" className="formats__pick" aria-haspopup="dialog" onClick={() => onChoose(f.id)}>
+                  Узнать дату
                   <span className="sr-only">: {f.title.toLowerCase()}</span>
                 </button>
               </li>

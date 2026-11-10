@@ -43,7 +43,7 @@ describe('разделы с данными рендерятся корректн
     expect(html).toContain('is-clamped');
     expect(html).toContain('aria-haspopup="dialog"');
     expect(html).not.toContain('aria-expanded');
-    expect(html).toMatch(/<dialog[^>]*class="review-dialog"/);
+    expect(html).toMatch(/<dialog[^>]*class="sheet review-dialog"/);
     expect(html).not.toMatch(/<dialog[^>]*\sopen/);
     expect(html).not.toMatch(/<figcaption>,/);
   });
@@ -127,6 +127,27 @@ describe('публичная страница', () => {
   it('у каждого якоря меню есть раздел', () => {
     const anchors = [...html.matchAll(/href="#([\w-]+)"/g)].map((m) => m[1]);
     for (const a of new Set(anchors)) expect(html, `#${a}`).toContain(`id="${a}"`);
+  });
+
+  it('кнопки «Узнать дату» ведут к форме и открывают окно связи; окно при загрузке закрыто', () => {
+    const ctas = [...html.matchAll(/<a[^>]*href="#contact"[^>]*>/g)].map((m) => m[0]);
+    expect(ctas.length).toBeGreaterThanOrEqual(3);
+    for (const a of ctas) expect(a).toContain('aria-haspopup="dialog"');
+    expect(html).toMatch(/<dialog[^>]*class="sheet quick"/);
+    expect(html).not.toMatch(/<dialog[^>]*\sopen/);
+  });
+
+  it('фото и отзывы стоят сразу после форматов, до подхода', () => {
+    const at = (id) => html.indexOf(`id="${id}"`);
+    if (PHOTOS.length && REVIEWS.length) {
+      expect(at('formats')).toBeLessThan(at('media'));
+      expect(at('media')).toBeLessThan(at('reviews'));
+      expect(at('reviews')).toBeLessThan(at('approach'));
+    }
+  });
+
+  it('WhatsApp на сайте нет', () => {
+    expect(html).not.toContain('wa.me');
   });
 
   it('география, кроме Челябинска, не публикуется', () => {

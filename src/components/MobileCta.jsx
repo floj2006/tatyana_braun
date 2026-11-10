@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { onQuickClick } from '../lib/quickContact.js';
 
 // Плавающая кнопка на телефоне: появляется после первого экрана и прячется у формы.
 export default function MobileCta() {
@@ -23,7 +24,7 @@ export default function MobileCta() {
   const shown = heroGone && !atContact;
   return (
     <div className={`mobile-cta${shown ? ' is-shown' : ''}`} aria-hidden={!shown}>
-      <a className="btn btn--primary btn--block" href="#contact" tabIndex={shown ? 0 : -1}>
+      <a className="btn btn--primary btn--block" href="#contact" tabIndex={shown ? 0 : -1} aria-haspopup="dialog" onClick={onQuickClick}>
         Узнать, свободна ли дата
       </a>
     </div>

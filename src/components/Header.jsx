@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { SITE } from '../content/site.js';
+import { onQuickClick } from '../lib/quickContact.js';
 
 export default function Header({ nav }) {
   const [open, setOpen] = useState(false);
@@ -30,7 +31,9 @@ export default function Header({ nav }) {
             ))}
           </ul>
         </nav>
-        <a href="#contact" className="btn btn--primary btn--sm header__cta">Узнать дату</a>
+        <a href="#contact" className="btn btn--primary btn--sm header__cta" aria-haspopup="dialog" onClick={onQuickClick}>
+          Узнать дату
+        </a>
         <button
           ref={btn}
           type="button"

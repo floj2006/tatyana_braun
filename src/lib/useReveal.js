@@ -18,6 +18,8 @@ export function useReveal() {
         entries.forEach((en) => {
           if (en.isIntersecting) {
             en.target.classList.remove('reveal--pending');
+            // запускает цепочку появления элементов внутри (CSS: .reveal--in .stagger > *)
+            en.target.classList.add('reveal--in');
             io.unobserve(en.target);
           }
         }),
@@ -25,7 +27,7 @@ export function useReveal() {
     els.forEach((el) => io.observe(el));
     return () => {
       io.disconnect();
-      els.forEach((el) => el.classList.remove('reveal--pending'));
+      els.forEach((el) => el.classList.remove('reveal--pending', 'reveal--in'));
     };
   }, []);
 }

@@ -1,5 +1,5 @@
 import Title from './Title.jsx';
-import Carousel from './Carousel.jsx';
+import Carousel, { QuickCta } from './Carousel.jsx';
 import { useState } from 'react';
 import { safeUrl } from '../content/site.js';
 
@@ -71,7 +71,7 @@ export default function Media({ photos = [], videos = [] }) {
           </div>
         )}
         {photos.length > 0 && (
-          <Carousel className="media__photos" label="Фотографии с праздников, листаются по горизонтали">
+          <Carousel className="media__photos" label="Фотографии с праздников, листаются по горизонтали" extra={<QuickCta />}>
             {photos.map((p) => (
               <li key={p.id}>
                 <figure>

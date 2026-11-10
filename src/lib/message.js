@@ -26,7 +26,8 @@ export function formatDate(iso) {
 export function buildMessage({ on, date, noDate, city, guests, comment }) {
   const lines = [`Здравствуйте, Татьяна. Ищу ведущую на ${clean(on, 60)}.`];
   lines.push(noDate ? 'Дата: пока не выбрана' : `Дата: ${formatDate(date)}`);
-  lines.push(`Город: ${clean(city, LIMITS.city)}`);
+  const place = clean(city, LIMITS.city);
+  if (place) lines.push(`Город: ${place}`);
   const g = clean(guests, LIMITS.guests);
   if (g) lines.push(`Гостей: примерно ${g}`);
   const c = clean(comment, LIMITS.comment);

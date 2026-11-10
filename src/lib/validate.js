@@ -20,9 +20,9 @@ export function validate(v, { formats, today }) {
     else if (v.date < today) e.date = 'Эта дата уже прошла.';
   }
 
+  // Город по желанию: большинство праздников в Челябинске.
   const city = String(v.city ?? '').trim();
-  if (!city) e.city = 'Укажите город.';
-  else if (city.length > LIMITS.city) e.city = `Не больше ${LIMITS.city} символов.`;
+  if (city.length > LIMITS.city) e.city = `Не больше ${LIMITS.city} символов.`;
 
   const guests = String(v.guests ?? '').trim();
   if (guests && !/^\d{1,4}$/.test(guests)) e.guests = 'Только число, например 40.';

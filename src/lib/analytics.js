@@ -52,7 +52,7 @@ export function initAnalytics() {
   if (analyticsEnabled() && getConsent() === 'yes') loadMetrika();
 }
 
-/** Цели: format_choose, form_submit, whatsapp_click. Без согласия ничего не отправляется. */
+/** Цели: format_choose, quick_open, vk_open, call, form_submit, whatsapp_click. Без согласия ничего не отправляется. */
 export function track(goal, params) {
   if (loaded) window.ym?.(Number(ANALYTICS.metrikaId), 'reachGoal', goal, params);
 }

@@ -9,9 +9,9 @@ describe('validate', () => {
     expect(validate(ok, opts)).toEqual({});
   });
 
-  it('требует формат, дату и город', () => {
+  it('требует формат и дату, город по желанию', () => {
     const e = validate({ format: '', date: '', noDate: false, city: '  ', guests: '', comment: '' }, opts);
-    expect(Object.keys(e).sort()).toEqual(['city', 'date', 'format']);
+    expect(Object.keys(e).sort()).toEqual(['date', 'format']);
   });
 
   it('не пропускает неизвестный формат', () => {

@@ -24,6 +24,10 @@ describe('buildMessage', () => {
     expect(m).not.toContain('Гостей');
   });
 
+  it('без города строки «Город» нет', () => {
+    expect(buildMessage({ ...base, city: '  ' })).not.toContain('Город');
+  });
+
   it('честно пишет, что даты пока нет, и не спрашивает про свободный день', () => {
     const m = buildMessage({ ...base, date: '', noDate: true });
     expect(m).toContain('Дата: пока не выбрана');

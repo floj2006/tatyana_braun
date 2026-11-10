@@ -5,6 +5,7 @@ import { todayIso, validate } from '../lib/validate.js';
 import { copySync, copyText } from '../lib/clipboard.js';
 import { isBusy, whatsappUrl } from '../lib/contact.js';
 import { track } from '../lib/analytics.js';
+import { ContactButtons } from './QuickContact.jsx';
 
 const EMPTY = { date: '', noDate: false, city: '', guests: '', comment: '' };
 const ORDER = ['format', 'date', 'city', 'guests', 'comment'];
@@ -95,24 +96,12 @@ export default function Contact({ format, onFormat, titleRef }) {
           <h2 id="contact-title" className="title" tabIndex={-1} ref={titleRef}>
             Узнать, свободна ли дата
           </h2>
-          <p>
-            Заявки принимаю в сообщениях моего сообщества во VK. Отметьте повод, дату и город и нажмите кнопку.
-            Текст сообщения скопируется, и в новой вкладке откроется диалог с сообществом. Останется вставить текст
-            и отправить.
+          <p>Заявки принимаю в сообщениях моего сообщества во VK. Можно сразу написать или позвонить.</p>
+          <ContactButtons where="contact" />
+          <p className="contact__form-note">
+            Если удобнее, заполните форму. Текст сообщения соберётся сам, его останется вставить в диалог
+            с сообществом.
           </p>
-          {SITE.vk && (
-            <p className="contact__direct">
-              Можно написать и без формы,{' '}
-              <a href={SITE.vk} target="_blank" rel="noopener noreferrer">
-                сразу мне во VK<span className="sr-only"> (откроется в новой вкладке)</span>
-              </a>
-            </p>
-          )}
-          {SITE.phoneHref && (
-            <p className="contact__direct">
-              Или позвоните: <a href={SITE.phoneHref}>{SITE.phone}</a>
-            </p>
-          )}
         </div>
 
         <div className="contact__panel">
@@ -171,7 +160,9 @@ export default function Contact({ format, onFormat, titleRef }) {
                 )}
               </div>
               <div className="field">
-                <label htmlFor={id('city')}>Город</label>
+                <label htmlFor={id('city')}>
+                  Город <span className="field__opt">по желанию</span>
+                </label>
                 <input
                   id={id('city')}
                   type="text"

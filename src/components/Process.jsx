@@ -7,7 +7,7 @@ export default function Process({ data }) {
       <div className="wrap process__in">
         <div>
           <Title id="process-title" text={data.title} />
-          <ol className="process__list">
+          <ol className="process__list stagger">
             {data.steps.map((s, i) => (
               <li key={s.title}>
                 <span className="process__n" aria-hidden="true">{i + 1}</span>

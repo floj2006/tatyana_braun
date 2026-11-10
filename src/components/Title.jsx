@@ -4,7 +4,8 @@ export default function Title({ as = 'h2', id, text, className = '' }) {
   const Tag = as;
   return (
     <Tag id={id} className={`title ${className}`.trim()}>
-      {text}
+      {/* внутренняя строка для анимации «выезжает из-под линии» при появлении раздела */}
+      <span className="title__in">{text}</span>
     </Tag>
   );
 }

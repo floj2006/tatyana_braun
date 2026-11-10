@@ -5,7 +5,7 @@ export default function Faq({ items }) {
     <section className="section faq reveal" id="faq" aria-labelledby="faq-title">
       <div className="wrap faq__in">
         <Title id="faq-title" text="Частые вопросы" />
-        <div>
+        <div className="stagger">
           {items.map(({ q, a }) => (
             <details className="faq__item" key={q}>
               <summary>{q}</summary>

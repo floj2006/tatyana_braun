@@ -18,18 +18,21 @@ import Contact from './components/Contact.jsx';
 import Footer from './components/Footer.jsx';
 import MobileCta from './components/MobileCta.jsx';
 import ConsentBanner from './components/ConsentBanner.jsx';
+import QuickContact from './components/QuickContact.jsx';
+import { openQuick } from './lib/quickContact.js';
 
 const hasMedia = PHOTOS.length + VIDEOS.length > 0;
 
-// Пункты меню только для разделов, у которых есть данные.
+// Пункты меню только для разделов, у которых есть данные. Порядок как на странице:
+// фото и отзывы сразу после форматов, до подробностей о подходе и подготовке.
 const HOME_NAV = [
   ['#about', 'Обо мне', ABOUT.facts.length + ABOUT.story.length],
   ['#formats', 'Форматы', FORMATS.length],
+  ['#media', 'Фото и видео', hasMedia],
+  ['#reviews', 'Отзывы', REVIEWS.length],
   ['#approach', 'Подход', APPROACH.items.length],
   ['#process', 'Подготовка', PROCESS.steps.length],
   ['#pricing', 'Стоимость', hasTerms(TERMS)],
-  ['#media', 'Фото и видео', hasMedia],
-  ['#reviews', 'Отзывы', REVIEWS.length],
   ['#faq', 'Вопросы', FAQ.length],
 ]
   .filter(([, , has]) => has)
@@ -37,6 +40,7 @@ const HOME_NAV = [
 
 const PAGE_NAV = [
   ['#approach', 'Как я веду'],
+  ...(REVIEWS.length ? [['#reviews', 'Отзывы']] : []),
   ['#process', 'Подготовка'],
   ['#pricing', 'Стоимость'],
   ['#faq', 'Вопросы'],
@@ -51,10 +55,15 @@ export default function App({ route = ROUTES[0] }) {
   const contactTitle = useRef(null);
   useReveal();
 
-  // Выбор формата переносится в форму, фокус переходит к обращению.
+  // Выбор формата переносится в форму и открывает окно связи.
   function chooseFormat(id) {
     setFormat(id);
     track('format_choose', { format: id });
+    openQuick();
+  }
+
+  // Переход к форме с готовым текстом: прокрутка и фокус на заголовке формы.
+  function goToForm() {
     const el = contactTitle.current;
     if (!el) return;
     const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -71,10 +80,10 @@ export default function App({ route = ROUTES[0] }) {
           <>
             <Hero page={page} price={pageFormat.priceFrom} hasVideo={hasMedia} />
             <Approach data={{ title: page.howTitle, items: page.how }} />
-            <Process data={PROCESS} />
-            <Terms data={TERMS} />
             <Media photos={PHOTOS} videos={VIDEOS} />
             <Reviews items={REVIEWS} />
+            <Process data={PROCESS} />
+            <Terms data={TERMS} />
             <Faq items={[...page.faq, ...FAQ]} />
             <OtherFormats current={pageFormat.id} />
           </>
@@ -83,11 +92,11 @@ export default function App({ route = ROUTES[0] }) {
             <Hero hasVideo={hasMedia} />
             <About data={ABOUT} />
             <Formats items={FORMATS} selected={format} onChoose={chooseFormat} />
+            <Media photos={PHOTOS} videos={VIDEOS} />
+            <Reviews items={REVIEWS} />
             <Approach data={APPROACH} />
             <Process data={PROCESS} />
             <Terms data={TERMS} />
-            <Media photos={PHOTOS} videos={VIDEOS} />
-            <Reviews items={REVIEWS} />
             <Faq items={FAQ} />
           </>
         )}
@@ -95,6 +104,7 @@ export default function App({ route = ROUTES[0] }) {
       </main>
       <Footer />
       <MobileCta />
+      <QuickContact onForm={goToForm} />
       <ConsentBanner />
     </>
   );

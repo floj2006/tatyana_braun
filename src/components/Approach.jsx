@@ -8,7 +8,7 @@ export default function Approach({ data, id = 'approach' }) {
           <Title id={`${id}-title`} text={data.title} />
           {data.intro && <p className="lead">{data.intro}</p>}
         </div>
-        <div className="approach__items">
+        <div className="approach__items stagger">
           {data.items.map((it, i) => (
             <article className="approach__item" key={it.title}>
               <span className="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>

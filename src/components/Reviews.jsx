@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import Title from './Title.jsx';
-import Carousel from './Carousel.jsx';
+import Carousel, { QuickCta } from './Carousel.jsx';
 import { safeUrl } from '../content/site.js';
 
 const SOURCE_HOSTS = ['vk.ru', 'vk.com', 'm.vk.ru', 'm.vk.com'];
@@ -68,14 +68,14 @@ function ReviewDialog({ r, onClose }) {
   return (
     <dialog
       ref={ref}
-      className="review-dialog"
+      className="sheet review-dialog"
       aria-labelledby={r ? titleId : undefined}
       onClose={onClose}
       onClick={(e) => e.target === ref.current && ref.current.close()}
     >
       {r && (
-        <figure className="review review--full">
-          <button type="button" className="review-dialog__close" onClick={() => ref.current.close()}>
+        <figure className="review review--full sheet__card">
+          <button type="button" className="sheet__close" onClick={() => ref.current.close()}>
             <span className="sr-only">Закрыть</span>
           </button>
           <p className="review__event" id={titleId}>
@@ -100,7 +100,7 @@ export default function Reviews({ items }) {
     <section className="section reviews reveal" id="reviews" aria-labelledby="reviews-title">
       <div className="wrap">
         <Title id="reviews-title" text="Отзывы" />
-        <Carousel className="reviews__list" label="Отзывы, листаются по горизонтали">
+        <Carousel className="reviews__list" label="Отзывы, листаются по горизонтали" extra={<QuickCta />}>
           {items.map((r, i) => (
             <Review r={r} key={r.id ?? i} onOpen={() => setActive(i)} />
           ))}
