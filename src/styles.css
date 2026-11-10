@@ -83,7 +83,7 @@ ul,ol{margin:0;padding:0}
 .hero{position:relative;display:flex;align-items:center;min-height:min(calc(100svh - var(--header)),940px);overflow:hidden;background:linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%)}
 .hero__photo{position:absolute;top:0;right:0;bottom:0;width:52%;margin:0}
 .hero__photo picture,.hero__photo img{display:block;width:100%;height:100%}
-.hero__photo img{object-fit:cover;object-position:78% 22%}
+.hero__photo img{object-fit:cover;object-position:52% 20%}
 /* мягкий переход фото в серебристый фон слева */
 .hero__photo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--bg) 0%,rgba(245,245,247,.55) 14%,rgba(245,245,247,0) 34%)}
 .hero__in{position:relative;z-index:1;padding:clamp(48px,7vw,104px) 0}
@@ -450,7 +450,7 @@ html:has(.sheet[open]){overflow:hidden}
 @media (max-width:899px){
   .hero{flex-direction:column;align-items:stretch;min-height:0}
   .hero__photo{position:relative;width:100%;height:clamp(240px,52svh,560px)}
-  .hero__photo img{object-position:74% 20%}
+  .hero__photo img{object-position:52% 18%}
   /* мягкий переход нижнего края фото в фон, без затемнения */
   .hero__photo::after{background:linear-gradient(180deg,rgba(245,245,247,0) 82%,var(--bg) 100%)}
   .hero__in{padding:14px 0 40px}
@@ -504,7 +504,7 @@ html:has(.sheet[open]){overflow:hidden}
 /* низкий экран телефона (например, 320×568): фото ниже, чтобы кнопка осталась в первом экране */
 @media (max-height:620px) and (max-width:899px){
   .hero__photo{height:clamp(200px,40svh,320px)}
-  .hero__photo img{object-position:74% 22%}
+  .hero__photo img{object-position:52% 20%}
 }
 @media (max-width:359px){
   .logo{font-size:.95rem;letter-spacing:.1em}

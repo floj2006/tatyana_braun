@@ -24,8 +24,8 @@ SILVER = (167, 171, 180)
 GRAPHITE = (54, 57, 64)
 
 # Исходники: фото первого экрана и фото для OG-картинки (на OG лицо должно быть крупным).
-HERO_SRC = SRC / 'hero-wedding.jpg'
-OG_SRC = SRC / 'tatyana-hero.webp'
+HERO_SRC = SRC / 'hero-pinstripe.webp'  # белый костюм в полоску, 2026-11-10
+OG_SRC = SRC / 'hero-pinstripe.webp'
 
 IMG.mkdir(parents=True, exist_ok=True)
 
