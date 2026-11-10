@@ -24,6 +24,11 @@ const indexable = !process.env.VERCEL_ENV || process.env.VERCEL_ENV === 'product
 function seo() {
   const url = siteUrl();
   // Структурированные данные: только подтверждённые сведения.
+  // Где ведёт праздники: Челябинск и Челябинская область (подтверждено Татьяной).
+  const areaServed = [
+    { '@type': 'City', name: SITE.city },
+    ...(SITE.region ? [{ '@type': 'AdministrativeArea', name: SITE.region }] : []),
+  ];
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Person',
@@ -33,14 +38,14 @@ function seo() {
     image: `${url}/img/og.jpg`,
     sameAs: [SITE.community, SITE.personal, SITE.telegram].filter(Boolean),
     ...(SITE.phoneHref ? { telephone: SITE.phoneHref.replace('tel:', '') } : {}),
-    // Услуги — форматы с сайта; цены и география не указываются, пока не подтверждены.
+    // Услуги — форматы с сайта; цены не указываются, пока не подтверждены.
     makesOffer: FORMATS.map((f) => ({
       '@type': 'Offer',
       itemOffered: {
         '@type': 'Service',
         name: `Ведущая: ${f.title.toLowerCase()}`,
         serviceType: 'Ведение мероприятий',
-        ...(SITE.city ? { areaServed: { '@type': 'City', name: SITE.city } } : {}),
+        ...(SITE.city ? { areaServed } : {}),
       },
     })),
     // Город подтверждён заказчиком; улица и точный адрес не указываются.
@@ -55,7 +60,7 @@ function seo() {
               addressCountry: 'RU',
             },
           },
-          areaServed: { '@type': 'City', name: SITE.city },
+          areaServed,
         }
       : {}),
   };
@@ -67,6 +72,7 @@ function seo() {
       handler: (html) =>
         html
           .replaceAll('__SITE_URL__', url)
+          .replaceAll('__AREA_IN__', SITE.areaIn)
           .replaceAll('__CITY_IN__', SITE.cityIn)
           .replaceAll('__CITY__', SITE.city)
           .replace('__JSON_LD__', JSON.stringify(jsonLd).replace(/</g, '\\u003c'))

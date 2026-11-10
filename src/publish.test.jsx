@@ -5,7 +5,7 @@ import App from './App.jsx';
 import Reviews from './components/Reviews.jsx';
 import Terms from './components/Terms.jsx';
 import Media from './components/Media.jsx';
-import { FORMATS, PHOTOS, REVIEWS, SITE, TERMS, VIDEOS } from './content/site.js';
+import { ABOUT, FORMATS, HERO, PHOTOS, REVIEWS, SITE, TERMS, VIDEOS } from './content/site.js';
 import { ROUTES } from './routes.js';
 import { HEADER_CSP } from '../csp.js';
 import vercel from '../vercel.json';
@@ -119,9 +119,20 @@ describe('публичная страница', () => {
     if (!REVIEWS.length) expect(html).not.toContain('href="#reviews"');
   });
 
-  it('город в главном заголовке, когда он подтверждён', () => {
-    const h1 = html.match(/<h1[\s\S]*?<\/h1>/)[0].replace(/<[^>]+>/g, '');
-    if (SITE.city) expect(h1).toContain(SITE.cityIn);
+  it('на первом экране слоган без города, город и область в «Обо мне» после текста Татьяны', () => {
+    const hero = html.slice(html.indexOf('id="top"'), html.indexOf('id="about"'));
+    expect(hero).toContain(HERO.lead);
+    expect(hero.match(/<h1[\s\S]*?<\/h1>/)[0]).not.toContain(SITE.cityIn);
+    const about = html.slice(html.indexOf('id="about"'), html.indexOf('id="formats"'));
+    expect(about).toContain(SITE.area);
+    expect(about).not.toMatch(/в другом городе/);
+    if (ABOUT.story.length) expect(about.indexOf(ABOUT.story[0])).toBeLessThan(about.indexOf('about__facts'));
+  });
+
+  it('детских праздников нет', () => {
+    expect(html).not.toMatch(/детск/i);
+    expect(html).not.toContain('detskij');
+    expect(ROUTES.some((r) => r.path.includes('detskij'))).toBe(false);
   });
 
   it('у каждого якоря меню есть раздел', () => {

@@ -36,6 +36,6 @@ describe('маршруты', () => {
     expect(routeFor('/svadba').format).toBe('wedding');
     expect(routeFor('/svadba/').format).toBe('wedding');
     expect(routeFor('/neizvestno/').path).toBe('/');
-    expect(formatPath(FORMATS.find((f) => f.id === 'other'))).toBe('');
+    expect(formatPath(FORMATS.find((f) => f.id === 'family'))).toBe('');
   });
 });

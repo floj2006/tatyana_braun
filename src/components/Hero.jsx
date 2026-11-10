@@ -8,7 +8,7 @@ const SIZES = '(min-width: 900px) 50vw, 100vw';
 // Первый экран: имя тонким капслоком, под ним рукописная подпись отдельной строкой (без наложений).
 // На телефоне фото сверху, текст под ним на светлом фоне.
 // page — страница формата: свой H1, имя становится подписью.
-export default function Hero({ hasVideo, page, price }) {
+export default function Hero({ media, page, price }) {
   const { photo } = HERO;
   const srcSet = (ext) => photo.widths.map((w) => `${photo.base}-${w}.${ext} ${w}w`).join(', ');
   const words = SITE.name.split(' ');
@@ -46,7 +46,7 @@ export default function Hero({ hasVideo, page, price }) {
                 </span>
               ))}
               <span className="hero__role">
-                <span className="hero__script">{SITE.role}</span> <span className="hero__city">{SITE.cityIn}</span>
+                <span className="hero__script">{SITE.role}</span>
               </span>
             </h1>
           )}
@@ -56,9 +56,9 @@ export default function Hero({ hasVideo, page, price }) {
             <a className="btn btn--primary" href="#contact" aria-haspopup="dialog" onClick={onQuickClick}>
               Узнать, свободна ли дата
             </a>
-            {hasVideo ? (
+            {media ? (
               <a className="link" href={page ? '/#media' : '#media'}>
-                Смотреть видео
+                {media}
               </a>
             ) : (
               SITE.vk && (

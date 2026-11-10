@@ -10,7 +10,7 @@ export default function Footer() {
         <div>
           <p className="footer__name">{SITE.name}</p>
           <p>
-            {SITE.role} {SITE.cityIn}
+            {SITE.role} {SITE.areaIn}
           </p>
         </div>
         <ul className="footer__formats" aria-label="Форматы">

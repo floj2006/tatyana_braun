@@ -22,6 +22,8 @@ import QuickContact from './components/QuickContact.jsx';
 import { openQuick } from './lib/quickContact.js';
 
 const hasMedia = PHOTOS.length + VIDEOS.length > 0;
+// Ссылка с первого экрана к разделу фото и видео: подпись по тому, что в нём есть.
+const mediaLink = VIDEOS.length ? 'Смотреть видео' : PHOTOS.length ? 'Смотреть фото' : '';
 
 // Пункты меню только для разделов, у которых есть данные. Порядок как на странице:
 // фото и отзывы сразу после форматов, до подробностей о подходе и подготовке.
@@ -30,7 +32,7 @@ const HOME_NAV = [
   ['#formats', 'Форматы', FORMATS.length],
   ['#media', 'Фото и видео', hasMedia],
   ['#reviews', 'Отзывы', REVIEWS.length],
-  ['#approach', 'Подход', APPROACH.items.length],
+  ['#approach', 'Почему я', APPROACH.items.length],
   ['#process', 'Подготовка', PROCESS.steps.length],
   ['#pricing', 'Стоимость', hasTerms(TERMS)],
   ['#faq', 'Вопросы', FAQ.length],
@@ -78,7 +80,7 @@ export default function App({ route = ROUTES[0] }) {
       <main id="main" tabIndex={-1}>
         {page ? (
           <>
-            <Hero page={page} price={pageFormat.priceFrom} hasVideo={hasMedia} />
+            <Hero page={page} price={pageFormat.priceFrom} media={mediaLink} />
             <Approach data={{ title: page.howTitle, items: page.how }} />
             <Media photos={PHOTOS} videos={VIDEOS} />
             <Reviews items={REVIEWS} />
@@ -89,7 +91,7 @@ export default function App({ route = ROUTES[0] }) {
           </>
         ) : (
           <>
-            <Hero hasVideo={hasMedia} />
+            <Hero media={mediaLink} />
             <About data={ABOUT} />
             <Formats items={FORMATS} selected={format} onChoose={chooseFormat} />
             <Media photos={PHOTOS} videos={VIDEOS} />

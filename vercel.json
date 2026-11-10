@@ -4,6 +4,18 @@
   "installCommand": "npm ci",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "/detskij-prazdnik",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/detskij-prazdnik/",
+      "destination": "/",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",

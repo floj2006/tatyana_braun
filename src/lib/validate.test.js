@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { todayIso, validate } from './validate.js';
 
-const opts = { formats: ['wedding', 'kids'], today: '2026-11-08' };
+const opts = { formats: ['wedding', 'family'], today: '2026-11-08' };
 const ok = { format: 'wedding', date: '2027-06-14', noDate: false, city: 'Казань', guests: '', comment: '' };
 
 describe('validate', () => {

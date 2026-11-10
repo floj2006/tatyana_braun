@@ -6,7 +6,17 @@ export default function Approach({ data, id = 'approach' }) {
       <div className="wrap">
         <div className="approach__head">
           <Title id={`${id}-title`} text={data.title} />
-          {data.intro && <p className="lead">{data.intro}</p>}
+          {Array.isArray(data.intro) ? (
+            <div className="approach__intro">
+              {data.intro.map((t) => (
+                <p className="lead" key={t}>
+                  {t}
+                </p>
+              ))}
+            </div>
+          ) : (
+            data.intro && <p className="lead">{data.intro}</p>
+          )}
         </div>
         <div className="approach__items stagger">
           {data.items.map((it, i) => (

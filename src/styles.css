@@ -98,6 +98,8 @@ ul,ol{margin:0;padding:0}
 .hero__eyebrow{margin:0 0 18px;font-family:var(--sans);font-weight:300;font-size:.95rem;letter-spacing:.16em;text-transform:uppercase;color:var(--graphite)}
 .hero__heading{font-family:var(--sans);font-weight:200;text-transform:uppercase;font-size:clamp(2.2rem,5vw,4.8rem);line-height:1;letter-spacing:.01em}
 .hero__lead{max-width:30em;margin:32px 0 32px;font-size:1.12rem;line-height:1.6;color:var(--muted)}
+/* на главной вместо описания слоган Татьяны */
+.hero:not(.hero--page) .hero__lead{max-width:24em;font-family:var(--serif);font-size:clamp(1.15rem,1.5vw,1.35rem);line-height:1.5;color:var(--graphite)}
 .hero__price{margin:-12px 0 28px;font-family:var(--serif);font-size:1.5rem;color:var(--graphite)}
 .hero__actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px 32px}
 .hero__scroll{position:absolute;left:50%;bottom:22px;z-index:1;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
@@ -152,6 +154,11 @@ ul,ol{margin:0;padding:0}
 /* Мой подход: тёмная секция с карточками */
 .approach__head{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:24px 64px;align-items:end;margin-bottom:clamp(40px,6vw,80px)}
 .approach__head .title,.approach__head .lead{margin:0}
+/* «Почему выбирают меня»: несколько абзацев, последний — акцентная строка */
+.approach__head:has(.approach__intro){align-items:start}
+.approach__intro .lead{max-width:34em}
+.approach__intro .lead+.lead{margin-top:16px}
+.approach__intro .lead:last-child{margin-top:24px;font-family:var(--serif);font-size:1.35rem;color:var(--on-dark)}
 .approach__items{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
 .approach__item{display:flex;flex-direction:column;min-height:260px;padding:32px;border-radius:var(--radius);background:var(--card-dark);transition:transform .4s var(--ease),background-color .4s var(--ease)}
 .approach__item:hover{transform:translateY(-4px);background:#31333a}
@@ -455,8 +462,6 @@ html:has(.sheet[open]){overflow:hidden}
   .hero__heading{font-size:min(9vw,3rem)}
   /* кнопка выше описания, чтобы попасть в первый экран */
   .hero__actions{order:3;margin-top:22px}
-  /* на главной описание подробно раскрыто в разделах ниже, первый экран — фото, имя и кнопка */
-  .hero:not(.hero--page) .hero__lead{display:none}
   .hero__lead{order:4;margin:20px 0 0}
   .hero__price{order:2;margin:14px 0 0}
   .hero__scroll{display:none}

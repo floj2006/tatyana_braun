@@ -16,7 +16,7 @@ function FactLink({ f }) {
   return f.text;
 }
 
-// «Обо мне»: портрет и справка из подтверждённого. Абзацы story появятся, когда будут слова самой Татьяны.
+// «Обо мне»: портрет, абзацы словами Татьяны (story), под ними справка: город, связь, телефон.
 export default function About({ data }) {
   if (!data?.facts?.length && !data?.story?.length) return null;
   const p = data.photo;
@@ -34,6 +34,11 @@ export default function About({ data }) {
         )}
         <div className="about__body">
           <Title id="about-title" text={data.title} />
+          {data.story?.map((t) => (
+            <p className="about__story" key={t}>
+              {t}
+            </p>
+          ))}
           {data.facts?.length > 0 && (
             <dl className="about__facts stagger">
               {data.facts.map((f) => (
@@ -46,11 +51,6 @@ export default function About({ data }) {
               ))}
             </dl>
           )}
-          {data.story?.map((t) => (
-            <p className="about__story" key={t}>
-              {t}
-            </p>
-          ))}
         </div>
       </div>
     </section>
