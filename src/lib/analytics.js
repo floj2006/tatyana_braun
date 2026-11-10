@@ -21,6 +21,25 @@ export function getConsent() {
   }
 }
 
+// Уведомление о cookie без Метрики: запоминаем только, что посетитель его закрыл.
+const NOTICE_KEY = 'tb-cookie-notice';
+
+export function noticeSeen() {
+  try {
+    return localStorage.getItem(NOTICE_KEY) === 'ok';
+  } catch {
+    return false;
+  }
+}
+
+export function setNoticeSeen() {
+  try {
+    localStorage.setItem(NOTICE_KEY, 'ok');
+  } catch {
+    // без хранилища плашка снова появится при следующем открытии
+  }
+}
+
 function loadMetrika() {
   if (loaded || !analyticsEnabled()) return;
   loaded = true;

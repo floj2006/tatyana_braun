@@ -362,6 +362,21 @@ html:has(.sheet[open]){overflow:hidden}
 .footer__links{list-style:none;display:flex;flex-wrap:wrap;gap:6px 24px}
 .footer__links a{display:inline-block;padding:10px 0;color:var(--ink);font-weight:600;text-decoration:none}
 .footer__links a:hover{text-decoration:underline;text-underline-offset:4px}
+.footer__legal{display:flex;flex-wrap:wrap;gap:6px 24px;align-items:center;justify-content:space-between;margin-top:24px;padding-top:20px;border-top:1px solid var(--line);font-size:.85rem}
+.footer__legal a{display:inline-block;padding:10px 0;color:var(--muted);text-underline-offset:4px}
+.footer__legal a:hover{color:var(--ink)}
+/* политика конфиденциальности: узкая колонка текста */
+.privacy{padding-top:clamp(48px,7vw,96px)}
+.privacy__in{max-width:760px}
+/* «КОНФИДЕНЦИАЛЬНОСТИ» — длинное слово: шрифт по ширине экрана, чтобы оно помещалось на телефоне */
+.privacy__title{font-size:clamp(1.35rem,6.2vw,3.6rem);margin-bottom:.3em;overflow-wrap:break-word}
+.privacy__updated{margin:0 0 clamp(32px,5vw,56px);color:var(--muted)}
+.privacy__section{padding:28px 0;border-top:1px solid var(--line)}
+.privacy__section h2{margin:0 0 14px;font-family:var(--serif);font-weight:400;font-size:1.4rem;line-height:1.3}
+.privacy__section p{margin:0 0 12px;line-height:1.65}
+.privacy__section p:last-child{margin-bottom:0}
+.privacy__section a{color:var(--ink);text-underline-offset:4px}
+.nowrap{white-space:nowrap}
 /* баннер согласия на аналитику */
 .consent{position:fixed;left:16px;right:16px;bottom:16px;z-index:60;max-width:560px;margin-left:auto;padding:18px 20px;border-radius:12px;background:var(--white);box-shadow:0 20px 50px -20px rgba(32,33,38,.5);font-size:.92rem;animation:fade-in .4s var(--ease) both}
 .consent p{margin:0 0 12px;color:var(--muted)}
@@ -496,6 +511,8 @@ html:has(.sheet[open]){overflow:hidden}
   .result__actions .btn{flex:1 1 100%}
   .faq__item summary{padding-right:44px}
   .faq__item p{padding-right:0}
+  /* плашка о cookie поднимается над плавающей кнопкой, чтобы не закрывать её */
+  body:has(.mobile-cta.is-shown) .consent{bottom:calc(88px + env(safe-area-inset-bottom))}
   .mobile-cta{display:block;position:fixed;left:0;right:0;bottom:0;z-index:40;padding:12px var(--gutter) calc(12px + env(safe-area-inset-bottom));background:rgba(245,245,247,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transform:translateY(110%);transition:transform .3s var(--ease),visibility 0s linear .3s;visibility:hidden}
   .mobile-cta::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:var(--metal-line)}
   .mobile-cta.is-shown{transform:none;visibility:visible;transition-delay:0s}

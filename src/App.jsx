@@ -19,6 +19,7 @@ import Footer from './components/Footer.jsx';
 import MobileCta from './components/MobileCta.jsx';
 import ConsentBanner from './components/ConsentBanner.jsx';
 import QuickContact from './components/QuickContact.jsx';
+import Privacy from './components/Privacy.jsx';
 import { openQuick } from './lib/quickContact.js';
 
 const hasMedia = PHOTOS.length + VIDEOS.length > 0;
@@ -49,6 +50,13 @@ const PAGE_NAV = [
   ['/#formats', 'Все форматы'],
 ];
 
+// Меню на служебных страницах (политика): ссылки на разделы главной.
+const SERVICE_NAV = [
+  ['/', 'На главную'],
+  ['/#formats', 'Форматы'],
+  ['/#reviews', 'Отзывы'],
+];
+
 export default function App({ route = ROUTES[0] }) {
   const pageFormat = FORMATS.find((f) => f.id === route.format);
   const page = pageFormat?.page;
@@ -76,9 +84,11 @@ export default function App({ route = ROUTES[0] }) {
   return (
     <>
       <a className="skip" href="#main">К содержимому</a>
-      <Header nav={page ? PAGE_NAV : HOME_NAV} />
+      <Header nav={route.page ? SERVICE_NAV : page ? PAGE_NAV : HOME_NAV} />
       <main id="main" tabIndex={-1}>
-        {page ? (
+        {route.page === 'privacy' ? (
+          <Privacy />
+        ) : page ? (
           <>
             <Hero page={page} price={pageFormat.priceFrom} media={mediaLink} />
             <Approach data={{ title: page.howTitle, items: page.how }} />

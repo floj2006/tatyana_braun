@@ -1,9 +1,11 @@
 import { FORMATS } from './content/site.js';
 
-// Главная и страницы форматов. Страница появляется, только если у формата есть slug и page.
+// Главная, страницы форматов и политика конфиденциальности.
+// Страница формата появляется, только если у формата есть slug и page.
 export const ROUTES = [
   { path: '/', format: null },
   ...FORMATS.filter((f) => f.slug && f.page).map((f) => ({ path: `/${f.slug}/`, format: f.id })),
+  { path: '/privacy/', format: null, page: 'privacy' },
 ];
 
 /** Маршрут по pathname; неизвестный путь — главная. */

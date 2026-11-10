@@ -1,7 +1,9 @@
 import { FORMATS, SITE } from '../content/site.js';
 import { formatPath } from '../routes.js';
-import { analyticsEnabled, policyUrl } from '../lib/analytics.js';
 import { whatsappUrl } from '../lib/contact.js';
+
+// Год сборки: страница пререндерится, поэтому год фиксируется при выкладке.
+const YEAR = new Date().getFullYear();
 
 export default function Footer() {
   return (
@@ -47,11 +49,6 @@ export default function Footer() {
               </a>
             </li>
           )}
-          {analyticsEnabled() && (
-            <li>
-              <a href={policyUrl()}>Политика конфиденциальности</a>
-            </li>
-          )}
           {SITE.telegram && (
             <li>
               <a href={SITE.telegram} target="_blank" rel="noopener noreferrer">
@@ -60,6 +57,16 @@ export default function Footer() {
             </li>
           )}
         </ul>
+      </div>
+      {/* Юридическая строка: реквизиты появляются, когда заполнен SITE.legal; политика есть всегда. */}
+      <div className="wrap footer__legal">
+        <p>
+          © {YEAR} {SITE.legal.fullName || SITE.name}
+          {SITE.legal.status && `, ${SITE.legal.status}`}
+          {SITE.legal.inn && `, ИНН ${SITE.legal.inn}`}
+          {SITE.legal.ogrnip && `, ОГРНИП ${SITE.legal.ogrnip}`}
+        </p>
+        <a href="/privacy/">Политика конфиденциальности</a>
       </div>
     </footer>
   );

@@ -32,7 +32,9 @@ describe('isBusy', () => {
 describe('маршруты', () => {
   it('у каждой страницы формата свой путь, главная — по умолчанию', () => {
     const withPage = FORMATS.filter((f) => f.slug && f.page);
-    expect(ROUTES).toHaveLength(withPage.length + 1);
+    // главная, страницы форматов и политика конфиденциальности
+    expect(ROUTES).toHaveLength(withPage.length + 2);
+    expect(routeFor('/privacy').page).toBe('privacy');
     expect(routeFor('/svadba').format).toBe('wedding');
     expect(routeFor('/svadba/').format).toBe('wedding');
     expect(routeFor('/neizvestno/').path).toBe('/');

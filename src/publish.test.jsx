@@ -5,7 +5,7 @@ import App from './App.jsx';
 import Reviews from './components/Reviews.jsx';
 import Terms from './components/Terms.jsx';
 import Media from './components/Media.jsx';
-import { ABOUT, FORMATS, HERO, PHOTOS, REVIEWS, SITE, TERMS, VIDEOS } from './content/site.js';
+import { ABOUT, FORMATS, HERO, PHOTOS, PRIVACY, REVIEWS, SITE, TERMS, VIDEOS } from './content/site.js';
 import { ROUTES } from './routes.js';
 import { HEADER_CSP } from '../csp.js';
 import vercel from '../vercel.json';
@@ -155,6 +155,19 @@ describe('публичная страница', () => {
       expect(at('media')).toBeLessThan(at('reviews'));
       expect(at('reviews')).toBeLessThan(at('approach'));
     }
+  });
+
+  it('политика конфиденциальности: ссылка в подвале каждой страницы, честный текст без заглушек', () => {
+    for (const r of ROUTES) expect(renderToString(<App route={r} />)).toContain('href="/privacy/"');
+    const privacy = renderToString(<App route={ROUTES.find((r) => r.page === 'privacy')} />);
+    expect(privacy).toContain(PRIVACY.title);
+    expect(privacy).toContain('не собирает и не хранит персональные данные');
+    if (SITE.phone) expect(privacy).toContain(SITE.phone);
+    expect(privacy).not.toMatch(/undefined|null|ИНН ,|ОГРНИП ,/);
+    // пустые реквизиты не выводятся
+    if (!SITE.legal.inn) expect(privacy).not.toContain('ИНН');
+    // плашка cookie не пререндерится: появляется только в браузере
+    expect(privacy).not.toContain('class="consent"');
   });
 
   it('WhatsApp на сайте нет', () => {

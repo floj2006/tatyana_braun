@@ -18,7 +18,8 @@ const json = (o) => JSON.stringify(o).replace(/</g, '\\u003c');
 
 function withMeta(html, path, m) {
   const url = `${site}${path}`;
-  const ld = {
+  // Разметка услуги только у страниц форматов; у служебных страниц (политика) её нет.
+  const ld = m.service ? {
     '@context': 'https://schema.org',
     '@graph': [
       {
@@ -37,7 +38,7 @@ function withMeta(html, path, m) {
         ],
       },
     ],
-  };
+  } : null;
   const out = html
     .replace(/<title>[^<]*<\/title>/, `<title>${attr(m.title)}</title>`)
     .replace(/(<meta name="description" content=")[^"]*(")/, `$1${attr(m.description)}$2`)
@@ -45,7 +46,7 @@ function withMeta(html, path, m) {
     .replace(/(<meta property="og:url" content=")[^"]*(")/, `$1${url}$2`)
     .replace(/(<meta property="og:title" content=")[^"]*(")/, `$1${attr(m.title)}$2`)
     .replace(/(<meta property="og:description" content=")[^"]*(")/, `$1${attr(m.description)}$2`)
-    .replace('</head>', `  <script type="application/ld+json">${json(ld)}</script>\n</head>`);
+    .replace('</head>', ld ? `  <script type="application/ld+json">${json(ld)}</script>\n</head>` : '</head>');
   for (const check of [`<title>${attr(m.title)}</title>`, `href="${url}"`]) {
     if (!out.includes(check)) throw new Error(`prerender: не удалось подставить мета-теги для ${path}`);
   }

@@ -89,7 +89,7 @@ function seo() {
       this.emitFile({
         type: 'asset',
         fileName: 'sitemap.xml',
-        source: `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${ROUTES.map(
+        source: `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${ROUTES.filter((r) => !r.page).map(
           (r) => `  <url><loc>${url}${r.path}</loc><lastmod>${today}</lastmod></url>`,
         ).join('\n')}\n</urlset>\n`,
       });
