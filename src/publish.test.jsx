@@ -36,13 +36,22 @@ describe('разделы с данными рендерятся корректн
     expect(html).toContain('rel="noopener noreferrer"');
   });
 
-  it('длинный отзыв целиком в HTML, свёрнут визуально и раскрывается кнопкой', () => {
+  it('длинный отзыв целиком в HTML, свёрнут визуально и открывается в окне', () => {
     const text = 'Очень длинный отзыв. '.repeat(30);
     const html = renderToString(<Reviews items={[{ id: 'l', author: '', event: 'Юбилей', text, source: '' }]} />);
     expect(html).toContain(text.trim());
     expect(html).toContain('is-clamped');
-    expect(html).toMatch(/aria-expanded="false"/);
+    expect(html).toContain('aria-haspopup="dialog"');
+    expect(html).not.toContain('aria-expanded');
+    expect(html).toMatch(/<dialog[^>]*class="review-dialog"/);
+    expect(html).not.toMatch(/<dialog[^>]*\sopen/);
     expect(html).not.toMatch(/<figcaption>,/);
+  });
+
+  it('без длинных отзывов окно не выводится', () => {
+    const html = renderToString(<Reviews items={[{ id: 's', author: 'Анна', event: '', text: 'Спасибо!', source: '' }]} />);
+    expect(html).not.toContain('<dialog');
+    expect(html).not.toContain('review__more');
   });
 
   it('отзыв без автора и повода не выводит пустую подпись', () => {
