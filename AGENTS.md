@@ -2,6 +2,11 @@
 
 Сайт ведущей праздников Татьяны Браун. Preact (preact/compat) + Vite, без сервера, деплой на Vercel.
 Внимание: ветка `claude/tatyana-braun-landing` — production. Любой push сразу выкатывается на сайт.
+План (2026-11-10, ещё не начат): переезд на FirstVDS. Чистый Ubuntu/Debian, nginx, Let's Encrypt, свой домен
+(заказчик купит). Выкладка автоматически через GitHub Actions по SSH. Ключи — только в секретах GitHub.
+При переезде перенести заголовки безопасности и редирект `/detskij-prazdnik/` из `vercel.json` в nginx,
+задать `SITE_URL`, сменить хостинг в `PRIVACY`, после проверки отключить Vercel.
+До команды заказчика остаёмся на Vercel.
 
 ## Контент
 - Весь контент в `src/content/site.js`. Компоненты контент не хардкодят.
