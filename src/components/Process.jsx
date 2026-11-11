@@ -10,9 +10,10 @@ export default function Process({ data }) {
           <ol className="process__list stagger">
             {data.steps.map((s, i) => (
               <li key={s.title}>
-                <span className="process__n" aria-hidden="true">{i + 1}</span>
+                <span className="process__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
                 <div>
                   <h3>{s.title}</h3>
+                  {s.tagline && <p className="process__tag">{s.tagline}</p>}
                   <p>{s.text}</p>
                 </div>
               </li>

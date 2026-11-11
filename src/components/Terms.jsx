@@ -15,28 +15,33 @@ export function hasTerms(data) {
   return Boolean(data && (data.includes?.length || rowsOf(data).length));
 }
 
-// «Стоимость»: что входит (карточки) и как считается цена. Тарифы появятся вместе с ценами.
+// «Что входит в стоимость»: карточки (номер, название, текст, картинка по желанию) и как считается цена.
+// Пункт — строка или { title, text, image }. Тарифы появятся вместе с ценами.
 export default function Terms({ data }) {
   if (!hasTerms(data)) return null;
   const rows = rowsOf(data);
   return (
     <section className="section pricing reveal" id="pricing" aria-labelledby="pricing-title">
       <div className="wrap">
-        <Title id="pricing-title" text="Стоимость" />
+        <Title id="pricing-title" text={data.title || 'Стоимость'} />
         {data.includes?.length > 0 && (
-          <>
-            <p className="pricing__sub">Входит в любой праздник</p>
-            <ul className="pricing__cards stagger">
-              {data.includes.map((x, i) => (
-                <li key={x}>
-                  <span className="num" aria-hidden="true">
+          <ul className="pricing__cards stagger">
+            {data.includes.map((x, i) => {
+              const it = typeof x === 'string' ? { title: x } : x;
+              return (
+                <li key={it.title} className={it.image ? 'has-image' : undefined}>
+                  {it.image && (
+                    <img src={it.image.src} width={it.image.width} height={it.image.height} alt={it.image.alt || ''} loading="lazy" decoding="async" />
+                  )}
+                  <span className="pricing__num" aria-hidden="true">
                     {String(i + 1).padStart(2, '0')}
                   </span>
-                  <p>{x}</p>
+                  <h3>{it.title}</h3>
+                  {it.text && <p>{it.text}</p>}
                 </li>
-              ))}
-            </ul>
-          </>
+              );
+            })}
+          </ul>
         )}
         <div className="pricing__foot">
           {rows.length > 0 && (
