@@ -175,7 +175,7 @@ ul,ol{margin:0;padding:0}
 .process__list{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(20px,3vw,40px)}
 .process__list li{position:relative;padding-top:22px;border-top:1px solid var(--graphite)}
 /* номера курсивом (просьба Татьяны): Prata без своего курсива, браузер наклоняет её сам */
-.process__n{display:block;font-family:var(--serif);font-style:italic;font-size:clamp(2.4rem,3.6vw,3.2rem);line-height:1;color:var(--silver);margin-bottom:22px}
+.process__n{display:block;font-family:var(--serif);font-style:italic;font-size:clamp(2.4rem,3.6vw,3.2rem);line-height:1;color:var(--muted);margin-bottom:22px}
 .process__list h3{margin:0 0 4px;font-size:1.25rem}
 .process__list .process__tag{margin:0 0 12px;font-family:var(--serif);font-size:1.12rem;color:var(--graphite)}
 .process__list p{margin:0;color:var(--muted)}
@@ -186,7 +186,7 @@ ul,ol{margin:0;padding:0}
 .pricing__cards{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;text-align:left}
 .pricing__cards li{position:relative;display:flex;flex-direction:column;gap:10px;padding:28px 28px 30px;border-radius:var(--radius);background:var(--white);box-shadow:0 1px 0 var(--line);overflow:hidden;transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
 .pricing__cards li:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
-.pricing__num{font-family:var(--serif);font-style:italic;font-size:2.6rem;line-height:1;color:var(--silver);margin-bottom:14px}
+.pricing__num{font-family:var(--serif);font-style:italic;font-size:2.6rem;line-height:1;color:var(--muted);margin-bottom:14px}
 .pricing__cards h3{margin:0;font-family:var(--serif);font-weight:400;font-size:1.3rem;line-height:1.3}
 .pricing__cards p{margin:0;color:var(--muted);line-height:1.55}
 /* картинка карточки сверху, на всю ширину */
@@ -388,7 +388,7 @@ html:has(.sheet[open]){overflow:hidden}
 .privacy__section a{color:var(--ink);text-underline-offset:4px}
 .nowrap{white-space:nowrap}
 /* баннер согласия на аналитику */
-.consent{position:fixed;left:16px;right:16px;bottom:16px;z-index:60;max-width:560px;margin-left:auto;padding:18px 20px;border-radius:12px;background:var(--white);box-shadow:0 20px 50px -20px rgba(32,33,38,.5);font-size:.92rem;animation:fade-in .4s var(--ease) both}
+.consent{position:fixed;left:16px;right:16px;bottom:16px;z-index:60;max-width:560px;margin-left:auto;padding:18px 20px;border-radius:12px;background:var(--white);box-shadow:0 20px 50px -20px rgba(32,33,38,.5);font-size:.92rem;animation:fade-in .4s var(--ease) both;transition:transform .3s var(--ease)}
 .consent p{margin:0 0 12px;color:var(--muted)}
 .consent a{color:var(--ink)}
 .consent__actions{display:flex;flex-wrap:wrap;gap:8px}
@@ -522,7 +522,7 @@ html:has(.sheet[open]){overflow:hidden}
   .faq__item summary{padding-right:44px}
   .faq__item p{padding-right:0}
   /* плашка о cookie поднимается над плавающей кнопкой, чтобы не закрывать её */
-  body:has(.mobile-cta.is-shown) .consent{bottom:calc(88px + env(safe-area-inset-bottom))}
+  body:has(.mobile-cta.is-shown) .consent{transform:translateY(-72px)}
   .mobile-cta{display:block;position:fixed;left:0;right:0;bottom:0;z-index:40;padding:12px var(--gutter) calc(12px + env(safe-area-inset-bottom));background:rgba(245,245,247,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transform:translateY(110%);transition:transform .3s var(--ease),visibility 0s linear .3s;visibility:hidden}
   .mobile-cta::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:var(--metal-line)}
   .mobile-cta.is-shown{transform:none;visibility:visible;transition-delay:0s}
