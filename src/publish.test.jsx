@@ -226,6 +226,25 @@ describe('публичная страница', () => {
   });
 });
 
+describe('реквизиты', () => {
+  it('ИНН физлица/ИП: 12 цифр и верные контрольные числа', () => {
+    const inn = SITE.legal.inn;
+    if (!inn) return;
+    expect(inn).toMatch(/^\d{12}$/);
+    const d = [...inn].map(Number);
+    const check = (w) => (w.reduce((s, k, i) => s + k * d[i], 0) % 11) % 10;
+    expect(check([7, 2, 4, 10, 3, 5, 9, 4, 6, 8])).toBe(d[10]);
+    expect(check([3, 7, 2, 4, 10, 3, 5, 9, 4, 6, 8])).toBe(d[11]);
+  });
+
+  it('ФИО и ИНН видны в подвале и в политике', () => {
+    if (!SITE.legal.inn) return;
+    for (const r of ROUTES) expect(renderToString(<App route={r} />)).toContain(`ИНН\u00a0${SITE.legal.inn}`);
+    const privacy = renderToString(<App route={ROUTES.find((r) => r.page === 'privacy')} />);
+    expect(privacy).toContain(SITE.legal.fullName);
+  });
+});
+
 describe('CSP', () => {
   it('заголовок в vercel.json совпадает с csp.js', () => {
     const all = vercel.headers.find((h) => h.source === '/(.*)').headers;

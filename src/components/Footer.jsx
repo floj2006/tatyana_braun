@@ -63,8 +63,8 @@ export default function Footer() {
         <p>
           © {YEAR} {SITE.legal.fullName || SITE.name}
           {SITE.legal.status && `, ${SITE.legal.status}`}
-          {SITE.legal.inn && `, ИНН ${SITE.legal.inn}`}
-          {SITE.legal.ogrnip && `, ОГРНИП ${SITE.legal.ogrnip}`}
+          {SITE.legal.inn && `, ИНН\u00a0${SITE.legal.inn}`}
+          {SITE.legal.ogrnip && `, ОГРНИП\u00a0${SITE.legal.ogrnip}`}
         </p>
         <a href="/privacy/">Политика конфиденциальности</a>
       </div>

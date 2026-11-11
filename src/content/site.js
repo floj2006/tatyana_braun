@@ -43,7 +43,8 @@ export const SITE = {
   // Реквизиты для подвала и политики конфиденциальности. Заполнить, когда Татьяна пришлёт:
   // fullName — ФИО полностью; status — 'самозанятая' или 'ИП'; inn — ИНН; ogrnip — только для ИП;
   // email — почта для вопросов о персональных данных (по желанию). Пустые поля не показываются.
-  legal: { fullName: '', status: '', inn: '', ogrnip: '', email: '' },
+  // ФИО и ИНН прислал заказчик 2026-11-11. Статус (самозанятая или ИП), ОГРНИП и почта ещё не получены.
+  legal: { fullName: 'Браун Татьяна Владимировна', status: '', inn: '743702036569', ogrnip: '', email: '' },
 };
 
 // Яндекс.Метрика включается, только когда заполнены оба поля: номер счётчика и ссылка на политику
@@ -60,8 +61,8 @@ export const ANALYTICS = {
 const operator = [
   SITE.legal.fullName || SITE.name,
   SITE.legal.status,
-  SITE.legal.inn && `ИНН ${SITE.legal.inn}`,
-  SITE.legal.ogrnip && `ОГРНИП ${SITE.legal.ogrnip}`,
+  SITE.legal.inn && `ИНН\u00a0${SITE.legal.inn}`,
+  SITE.legal.ogrnip && `ОГРНИП\u00a0${SITE.legal.ogrnip}`,
 ]
   .filter(Boolean)
   .join(', ');
