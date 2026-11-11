@@ -37,17 +37,22 @@ describe('разделы с данными рендерятся корректн
     expect(html).toMatch(/<video[^>]*playsinline/i);
     expect(html).toContain('preload="none"');
     expect(html).not.toMatch(/<video[^>]*autoplay/i);
-    expect(html).toContain(`poster="${ABOUT.photo.base}-1200.webp"`);
+    expect(html).toContain(`poster="${ABOUT.video.poster || `${ABOUT.photo.base}-1200.webp`}"`);
     expect(html).toContain('about__video-start'); // без JS — кнопка «Смотреть», звук и пауза появляются после загрузки
     expect(html).not.toContain('<picture');
   });
 
   it('без видео в «Обо мне» портрет, на первом экране кнопки видео нет', () => {
-    expect(ABOUT.video.src).toBe('');
-    const html = renderToString(<About data={ABOUT} />);
+    const html = renderToString(<About data={{ ...ABOUT, video: { ...ABOUT.video, src: '' } }} />);
     expect(html).toContain('<picture');
     expect(html).not.toContain('<video');
-    expect(renderToString(<App route={ROUTES[0]} />)).not.toContain('Видео-приветствие');
+    expect(renderToString(<App route={ROUTES[0]} />)).not.toContain('hero__video');
+  });
+
+  it('файлы видео-приветствия и его заставки лежат в public', () => {
+    if (!ABOUT.video.src) return;
+    expect(existsSync(`public${ABOUT.video.src}`)).toBe(true);
+    if (ABOUT.video.poster) expect(existsSync(`public${ABOUT.video.poster}`)).toBe(true);
   });
 
   it('отзыв со ссылкой на источник открывается безопасно', () => {

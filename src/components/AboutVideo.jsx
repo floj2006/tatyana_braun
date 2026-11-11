@@ -93,9 +93,6 @@ export default function AboutVideo({ video, poster }) {
         onTimeUpdate={progress}
         onEnded={ended}
       />
-      <span className="about__video-tag" aria-hidden="true">
-        Видео-приветствие
-      </span>
       {!auto && !started ? (
         <button type="button" className="about__video-start" onClick={withSound}>
           <span className="about__video-play" aria-hidden="true" />
