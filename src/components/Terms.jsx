@@ -1,4 +1,5 @@
 import Title from './Title.jsx';
+import Icon from './Icon.jsx';
 import { onQuickClick } from '../lib/quickContact.js';
 
 function rowsOf(data) {
@@ -33,9 +34,16 @@ export default function Terms({ data }) {
                   {it.image && (
                     <img src={it.image.src} width={it.image.width} height={it.image.height} alt={it.image.alt || ''} loading="lazy" decoding="async" />
                   )}
-                  <span className="pricing__num" aria-hidden="true">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
+                  <div className="pricing__top">
+                    {it.icon && !it.image && (
+                      <span className="pricing__icon">
+                        <Icon name={it.icon} />
+                      </span>
+                    )}
+                    <span className="pricing__num" aria-hidden="true">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                  </div>
                   <h3>{it.title}</h3>
                   {it.text && <p>{it.text}</p>}
                 </li>
