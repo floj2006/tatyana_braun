@@ -150,6 +150,10 @@ export const HERO = {
   lead: 'Я не просто веду праздники. Я создаю моменты, которые хочется проживать снова и снова!',
   // Картинка для превью ссылки в мессенджерах (Open Graph); имя тоже меняется вместе с фото.
   og: '/img/og-pinstripe.jpg',
+  // Видео-приветствие Татьяны: кнопка «Видео-приветствие» на первом экране открывает его в окне.
+  // Пока src пустой, кнопки нет. Файл класть в public/video/ (MP4 H.264, 720p, 30–60 с, до ~10 МБ),
+  // poster — кадр из видео в public/img/. Видео грузится только по нажатию, без автозапуска при загрузке.
+  video: { src: '', poster: '', title: 'Видео-приветствие Татьяны Браун' },
   photo: {
     // Имя файла меняется вместе с фото (см. scripts/build-images.py), иначе браузеры покажут старое из кеша.
     base: '/img/hero-pinstripe',
@@ -342,6 +346,16 @@ export const FORMATS = [
     hint: 'Повод, например Новый год.',
   },
   {
+    // Выпускные: формат и описание словами Татьяны (2026-11-11). Отдельной страницы нет.
+    id: 'graduation',
+    priceFrom: null,
+    title: 'Выпускные вечера',
+    short: 'Выпускной',
+    on: 'выпускной',
+    text: 'Яркое завершение важной главы и начало нового пути! Современная программа, весёлые интерактивы, трогательные моменты и незабываемые впечатления для выпускников.',
+    hint: 'Школьный или студенческий выпускной, сколько выпускников.',
+  },
+  {
     id: 'family',
     priceFrom: null,
     title: 'Семейные и тематические праздники',
@@ -433,17 +447,21 @@ export const PHOTOS = [
   // чёрно-белые разнесены. Первым идёт самый сильный кадр с Татьяной и молодожёнами.
   { id: 'wedding-neon', base: '/img/photos/03-h-wedding-neon', widths: [600, 1200], width: 1200, height: 798, alt: 'Татьяна Браун с микрофоном проводит игру с женихом и невестой у светящейся надписи', caption: '' },
   { id: 'guests-pile', base: '/img/photos/02-g-guests-pile', widths: [600, 1200], width: 1200, height: 1800, alt: 'Молодые гости в рубашках улыбаются, сложившись друг на друга для общего фото', caption: '' },
-  { id: 'wedding-couple', base: '/img/photos/01-a-wedding-couple', widths: [600, 1200], width: 1200, height: 1804, alt: 'Татьяна Браун с микрофоном рядом с женихом и невестой у фотозоны', caption: '' },
+  { id: 'wedding-green', base: '/img/photos/02-p-wedding-green', widths: [600, 1200], width: 1200, height: 1600, alt: 'Татьяна Браун в жёлтом костюме с женихом и невестой у зелёной стены с вензелем', caption: '' },
   { id: 'guests-game', base: '/img/photos/05-j-guests-game', widths: [600, 1200], width: 1200, height: 800, alt: 'Гости в банкетном зале несут друг друга на руках во время игры', caption: '' },
   { id: 'wedding-bite', base: '/img/photos/03-m-wedding-karavai-bite', widths: [600, 1200], width: 1200, height: 798, alt: 'Молодожёны кусают каравай, рядом улыбается Татьяна Браун с микрофоном, чёрно-белый кадр', caption: '' },
   { id: 'guests-horse', base: '/img/photos/01-k-guests-horse', widths: [600, 1200], width: 1200, height: 1800, alt: 'Гости на полу банкетного зала играют в «наездников» и смеются', caption: '' },
+  { id: 'graduation', base: '/img/photos/03-q-graduation-screen', widths: [600, 1200], width: 1200, height: 1600, alt: 'Татьяна Браун на фоне большого экрана с надписью «Выпускной»', caption: '' },
+  { id: 'guests-house', base: '/img/photos/01-o-guests-house', widths: [600, 1200], width: 1200, height: 900, alt: 'Гости юбилея всех возрастов складывают руки домиком над юбиляршей', caption: '' },
   { id: 'jubilee', base: '/img/photos/05-e-jubilee', widths: [600, 969], width: 969, height: 1280, alt: 'Татьяна Браун между двумя юбиляршами у фотозоны', caption: '' },
   { id: 'guests-hands', base: '/img/photos/01-f-guests-hands', widths: [600, 1200], width: 1200, height: 800, alt: 'Гости за круглым столом поднимают руки вверх', caption: '' },
   { id: 'wedding-mic', base: '/img/photos/02-b-wedding-mic', widths: [600, 1200], width: 1200, height: 798, alt: 'Татьяна Браун говорит в микрофон рядом с гостем, чёрно-белый кадр', caption: '' },
   { id: 'guests-floor', base: '/img/photos/02-l-guests-floor', widths: [600, 1200], width: 1200, height: 1800, alt: 'Гости сидят и лежат на полу во время игры, вокруг смеются дети и взрослые', caption: '' },
-  { id: 'wedding-game', base: '/img/photos/04-d-wedding-game', widths: [600, 1200], width: 1200, height: 1804, alt: 'Татьяна Браун и гость держат большую банку в банкетном зале', caption: '' },
+  { id: 'wedding-couple', base: '/img/photos/01-a-wedding-couple', widths: [600, 1200], width: 1200, height: 1804, alt: 'Татьяна Браун с микрофоном рядом с женихом и невестой у фотозоны', caption: '' },
   { id: 'wedding-guests', base: '/img/photos/03-c-wedding-guests', widths: [600, 1200], width: 1200, height: 798, alt: 'Гости за банкетными столами поднимают руки с бумажными предметами', caption: '' },
+  { id: 'wedding-game', base: '/img/photos/04-d-wedding-game', widths: [600, 1200], width: 1200, height: 1804, alt: 'Татьяна Браун и гость держат большую банку в банкетном зале', caption: '' },
   { id: 'wedding-karavai', base: '/img/photos/04-i-wedding-karavai', widths: [600, 1200], width: 1200, height: 798, alt: 'Татьяна Браун с микрофоном встречает молодожёнов с караваем, чёрно-белый кадр', caption: '' },
+  { id: 'portrait-thumbs', base: '/img/photos/01-r-portrait-thumbs', widths: [600, 1200], width: 1200, height: 1600, alt: 'Татьяна Браун в голубом пиджаке показывает два больших пальца вверх', caption: '' },
 ];
 
 // Видео с праздников. Свой файл: { id, title, src: '/video/x.mp4', poster: { src, width, height } } —
