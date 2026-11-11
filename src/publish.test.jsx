@@ -1,5 +1,6 @@
 // Защита публикации: на сайт не должны попадать пустые разделы, заглушки и выдуманные факты.
 import { describe, expect, it } from 'vitest';
+import { existsSync } from 'node:fs';
 import { renderToString } from 'react-dom/server';
 import App from './App.jsx';
 import Reviews from './components/Reviews.jsx';
@@ -168,6 +169,13 @@ describe('публичная страница', () => {
     if (!SITE.legal.inn) expect(privacy).not.toContain('ИНН');
     // плашка cookie не пререндерится: появляется только в браузере
     expect(privacy).not.toContain('class="consent"');
+  });
+
+  it('файлы фото первого экрана и картинки для мессенджеров есть под именами из HERO', () => {
+    for (const w of HERO.photo.widths) {
+      for (const ext of ['avif', 'webp']) expect(existsSync(`public${HERO.photo.base}-${w}.${ext}`), `${w}.${ext}`).toBe(true);
+    }
+    expect(existsSync(`public${HERO.og}`)).toBe(true);
   });
 
   it('WhatsApp на сайте нет', () => {

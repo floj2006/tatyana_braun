@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import preact from '@preact/preset-vite';
-import { FORMATS, SITE } from './src/content/site.js';
+import { FORMATS, HERO, SITE } from './src/content/site.js';
 import { ROUTES } from './src/routes.js';
 import { META_CSP } from './csp.js';
 
@@ -35,7 +35,7 @@ function seo() {
     name: SITE.name,
     jobTitle: SITE.role,
     url: `${url}/`,
-    image: `${url}/img/og.jpg`,
+    image: `${url}${HERO.og}`,
     sameAs: [SITE.community, SITE.personal, SITE.telegram].filter(Boolean),
     ...(SITE.phoneHref ? { telephone: SITE.phoneHref.replace('tel:', '') } : {}),
     // Услуги — форматы с сайта; цены не указываются, пока не подтверждены.
@@ -71,6 +71,8 @@ function seo() {
       order: 'pre',
       handler: (html) =>
         html
+          .replaceAll('__SITE_URL__/__OG__', `${url}${HERO.og}`)
+          .replaceAll('__HERO__', HERO.photo.base)
           .replaceAll('__SITE_URL__', url)
           .replaceAll('__AREA_IN__', SITE.areaIn)
           .replaceAll('__CITY_IN__', SITE.cityIn)

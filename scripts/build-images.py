@@ -25,6 +25,10 @@ GRAPHITE = (54, 57, 64)
 
 # Исходники: фото первого экрана и фото для OG-картинки (на OG лицо должно быть крупным).
 HERO_SRC = SRC / 'hero-pinstripe.webp'  # белый костюм в полоску, 2026-11-10
+# Имена выходных файлов. При замене фото — новое имя: браузеры и мессенджеры кешируют картинки по адресу,
+# и под старым именем посетители ещё неделю видели бы прежнее фото. Обновить и HERO в src/content/site.js.
+HERO_NAME = 'hero-pinstripe'
+OG_NAME = 'og-pinstripe.jpg'
 OG_SRC = SRC / 'hero-pinstripe.webp'
 
 IMG.mkdir(parents=True, exist_ok=True)
@@ -36,8 +40,8 @@ def hero():
         w = min(w, im.width)
         h = round(im.height * w / im.width)
         r = im.resize((w, h), Image.LANCZOS)
-        r.save(IMG / f'hero-{w}.avif', 'AVIF', quality=42, speed=4)
-        r.save(IMG / f'hero-{w}.webp', 'WEBP', quality=74, method=6)
+        r.save(IMG / f'{HERO_NAME}-{w}.avif', 'AVIF', quality=42, speed=4)
+        r.save(IMG / f'{HERO_NAME}-{w}.webp', 'WEBP', quality=74, method=6)
         print('hero', w, h)
     return im
 
@@ -60,7 +64,7 @@ def og(photo):
     d.line((72, 452, 132, 452), fill=SILVER, width=2)
     d.text((152, 434), 'Ведущая мероприятий', font=ImageFont.truetype(str(ONEST), 32), fill=GRAPHITE)
     d.text((152, 474), CITY_IN, font=ImageFont.truetype(str(ONEST), 32), fill=MUTED)
-    canvas.save(IMG / 'og.jpg', 'JPEG', quality=86, optimize=True, progressive=True)
+    canvas.save(IMG / OG_NAME, 'JPEG', quality=86, optimize=True, progressive=True)
     print('og', canvas.size)
 
 

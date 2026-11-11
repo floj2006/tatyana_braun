@@ -148,8 +148,11 @@ export const BUSY_DATES = [];
 export const HERO = {
   // Слоган Татьяны.
   lead: 'Я не просто веду праздники. Я создаю моменты, которые хочется проживать снова и снова!',
+  // Картинка для превью ссылки в мессенджерах (Open Graph); имя тоже меняется вместе с фото.
+  og: '/img/og-pinstripe.jpg',
   photo: {
-    base: '/img/hero',
+    // Имя файла меняется вместе с фото (см. scripts/build-images.py), иначе браузеры покажут старое из кеша.
+    base: '/img/hero-pinstripe',
     widths: [480, 800, 1120],
     width: 1120,
     height: 1680,
