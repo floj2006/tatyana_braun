@@ -1,5 +1,6 @@
 import Title from './Title.jsx';
 import { SITE } from '../content/site.js';
+import AboutVideo from './AboutVideo.jsx';
 
 const PHOTO_SIZES = '(min-width: 900px) 40vw, 100vw';
 
@@ -16,21 +17,26 @@ function FactLink({ f }) {
   return f.text;
 }
 
-// «Обо мне»: портрет, абзацы словами Татьяны (story), под ними справка: город, связь, телефон.
+// «Обо мне»: портрет (или видео-приветствие на его месте, если есть data.video.src), абзацы словами Татьяны (story), под ними справка: город, связь, телефон.
 export default function About({ data }) {
   if (!data?.facts?.length && !data?.story?.length) return null;
   const p = data.photo;
   const set = (ext) => p.widths.map((w) => `${p.base}-${w}.${ext} ${w}w`).join(', ');
+  const video = data.video?.src ? data.video : null;
   return (
     <section className="section about reveal" id="about" aria-labelledby="about-title">
-      <div className={`wrap about__in${p ? ' about__in--photo' : ''}`}>
-        {p && (
+      <div className={`wrap about__in${p || video ? ' about__in--photo' : ''}`}>
+        {video ? (
+          <AboutVideo video={video} poster={p ? `${p.base}-${p.widths.at(-1)}.webp` : undefined} />
+        ) : (
+          p && (
           <figure className="about__photo">
             <picture>
               <source type="image/avif" srcSet={set('avif')} sizes={PHOTO_SIZES} />
               <img src={`${p.base}-${p.widths[0]}.webp`} srcSet={set('webp')} sizes={PHOTO_SIZES} width={p.width} height={p.height} alt={p.alt} loading="lazy" decoding="async" />
             </picture>
           </figure>
+          )
         )}
         <div className="about__body">
           <Title id="about-title" text={data.title} />

@@ -1,7 +1,6 @@
 import { HERO, SITE } from '../content/site.js';
 import { priceLabel } from '../lib/contact.js';
 import { onQuickClick } from '../lib/quickContact.js';
-import VideoGreeting from './VideoGreeting.jsx';
 
 // Должно совпадать с imagesizes у preload в index.html.
 const SIZES = '(min-width: 900px) 50vw, 100vw';
@@ -57,9 +56,7 @@ export default function Hero({ media, page, price }) {
             <a className="btn btn--primary" href="#contact" aria-haspopup="dialog" onClick={onQuickClick}>
               Узнать, свободна ли дата
             </a>
-            {!page && HERO.video?.src ? (
-              <VideoGreeting video={HERO.video} />
-            ) : media ? (
+            {media ? (
               <a className="link" href={page ? '/#media' : '#media'}>
                 {media}
               </a>

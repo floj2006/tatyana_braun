@@ -6,6 +6,7 @@ import App from './App.jsx';
 import Reviews from './components/Reviews.jsx';
 import Terms from './components/Terms.jsx';
 import Media from './components/Media.jsx';
+import About from './components/About.jsx';
 import { ABOUT, FORMATS, HERO, PHOTOS, PRIVACY, REVIEWS, SITE, TERMS, VIDEOS } from './content/site.js';
 import { ROUTES } from './routes.js';
 import { HEADER_CSP } from '../csp.js';
@@ -29,6 +30,26 @@ describe('разделы без данных не рендерятся', () => {
 });
 
 describe('разделы с данными рендерятся корректно', () => {
+  it('видео-приветствие встаёт в «Обо мне» на место портрета, без звука и без загрузки заранее', () => {
+    const html = renderToString(<About data={{ ...ABOUT, video: { ...ABOUT.video, src: '/video/hello.mp4' } }} />);
+    expect(html).toContain('src="/video/hello.mp4"');
+    expect(html).toMatch(/<video[^>]*\bmuted\b/);
+    expect(html).toMatch(/<video[^>]*playsinline/i);
+    expect(html).toContain('preload="none"');
+    expect(html).not.toMatch(/<video[^>]*autoplay/i);
+    expect(html).toContain(`poster="${ABOUT.photo.base}-1200.webp"`);
+    expect(html).toContain('about__video-start'); // без JS — кнопка «Смотреть», звук и пауза появляются после загрузки
+    expect(html).not.toContain('<picture');
+  });
+
+  it('без видео в «Обо мне» портрет, на первом экране кнопки видео нет', () => {
+    expect(ABOUT.video.src).toBe('');
+    const html = renderToString(<About data={ABOUT} />);
+    expect(html).toContain('<picture');
+    expect(html).not.toContain('<video');
+    expect(renderToString(<App route={ROUTES[0]} />)).not.toContain('Видео-приветствие');
+  });
+
   it('отзыв со ссылкой на источник открывается безопасно', () => {
     const html = renderToString(
       <Reviews items={[{ author: 'Анна', event: 'свадьба', text: 'Спасибо!', source: 'https://vk.com/wall-1_2' }]} />,
