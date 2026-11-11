@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import Icon from './Icon.jsx';
 
 // Можно ли запускать самому: нет prefers-reduced-motion и режима экономии трафика.
 // На сервере false: в разметке кнопка «Смотреть», после загрузки скрипта её сменяют кнопки звука и паузы.
@@ -86,6 +87,7 @@ export default function AboutVideo({ video, poster }) {
         loop
         playsInline
         preload="none"
+        disablePictureInPicture
         aria-label={video.title}
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
@@ -95,17 +97,20 @@ export default function AboutVideo({ video, poster }) {
       />
       {!auto && !started ? (
         <button type="button" className="about__video-start" onClick={withSound}>
-          <span className="about__video-play" aria-hidden="true" />
+          <span className="about__video-play">
+            <Icon name="play" solid stroke={1} />
+          </span>
           Смотреть
           <span className="sr-only"> видео-приветствие со звуком</span>
         </button>
       ) : (
         <div className="about__video-ctrl">
           <button type="button" className="about__video-btn about__video-btn--sound" onClick={toggleSound}>
-            <span className="about__video-ico" aria-hidden="true" />
+            <Icon name={muted ? 'volumeOff' : 'volumeOn'} className="about__video-ico" stroke={2} />
             <span className="about__video-label">{muted ? 'Включить звук' : 'Звук включён'}</span>
           </button>
           <button type="button" className="about__video-btn about__video-btn--play" onClick={togglePlay}>
+            <Icon name={playing ? 'pause' : 'play'} solid stroke={1} />
             <span className="sr-only">{playing ? 'Пауза' : 'Смотреть'}</span>
           </button>
         </div>
