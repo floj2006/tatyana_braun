@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { ABOUT, APPROACH, FAQ, FORMATS, PHOTOS, PROCESS, REVIEWS, TERMS, VIDEOS } from './content/site.js';
+import { ABOUT, APPROACH, FAQ, FAQ_HEAD, FINAL_CTA, FORMATS, PHOTOS, PROCESS, REVIEWS, TERMS, VIDEOS } from './content/site.js';
 import { ROUTES } from './routes.js';
 import { useReveal } from './lib/useReveal.js';
 import { track } from './lib/analytics.js';
@@ -20,6 +20,7 @@ import MobileCta from './components/MobileCta.jsx';
 import ConsentBanner from './components/ConsentBanner.jsx';
 import QuickContact from './components/QuickContact.jsx';
 import Privacy from './components/Privacy.jsx';
+import FinalCta from './components/FinalCta.jsx';
 import { openQuick } from './lib/quickContact.js';
 
 const hasMedia = PHOTOS.length + VIDEOS.length > 0;
@@ -96,7 +97,8 @@ export default function App({ route = ROUTES[0] }) {
             <Reviews items={REVIEWS} />
             <Process data={PROCESS} />
             <Terms data={TERMS} />
-            <Faq items={[...page.faq, ...FAQ]} />
+            <Faq items={[...page.faq, ...FAQ]} head={FAQ_HEAD} />
+            <FinalCta data={FINAL_CTA} />
             <OtherFormats current={pageFormat.id} />
           </>
         ) : (
@@ -109,7 +111,8 @@ export default function App({ route = ROUTES[0] }) {
             <Approach data={APPROACH} />
             <Process data={PROCESS} />
             <Terms data={TERMS} />
-            <Faq items={FAQ} />
+            <Faq items={FAQ} head={FAQ_HEAD} />
+            <FinalCta data={FINAL_CTA} />
           </>
         )}
         <Contact format={format} onFormat={setFormat} titleRef={contactTitle} />
