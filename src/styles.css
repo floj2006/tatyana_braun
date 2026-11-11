@@ -348,6 +348,11 @@ html:has(.sheet[open]){overflow:hidden}
 .field input:focus-visible,.field textarea:focus-visible{outline:2px solid var(--graphite);outline-offset:1px}
 .field input:disabled{background:var(--bg-2);color:var(--muted);border-color:var(--line)}
 .field textarea{resize:vertical;min-height:84px}
+/* Safari на iOS задаёт полю даты собственную ширину и не даёт ему сжаться: снимаем системный вид
+   и минимальную ширину, значение выравниваем влево, высоту держим как у остальных полей */
+.field input[type="date"]{display:block;min-width:0;max-width:100%;height:52px;-webkit-appearance:none;appearance:none;text-align:left}
+.field input[type="date"]::-webkit-date-and-time-value{text-align:left;min-height:1.5em}
+.field input[type="date"]::-webkit-calendar-picker-indicator{opacity:.6;cursor:pointer}
 .field [aria-invalid="true"]{border-color:var(--error)}
 .check{display:inline-flex;align-items:center;gap:10px;margin-top:10px;min-height:32px;font-size:.95rem;cursor:pointer;justify-self:start}
 .check input{width:20px;height:20px;margin:0;accent-color:var(--graphite)}
